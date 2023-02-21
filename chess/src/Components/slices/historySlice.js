@@ -11,7 +11,6 @@ export const historySlices = createSlice({
     reducers:{
         changeHistoryAction:(state,action) =>{   
                 return { ...state ,history : [ ...state.history, action.payload] }
-
         },
         arrayCounter : (state) =>{
             state = { ...state, counter: state.counter+1, arrCounter: [...state.arrCounter, state.counter+1] }

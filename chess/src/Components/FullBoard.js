@@ -4,16 +4,18 @@ import data from './datas/Data';
 import useSound from 'use-sound';
 import soundStep from '../../src/sounds/step.mp3';
 
-import { checkedPawnStepped } from './figuresSteps/checkedStep';
 import { 
 	selectFigure, 
 	checkKingAroundAndEnemyFigures, 
 	checkKingCantStep,
 	checkUnionOverlaps, 
 	checkedShah } from './figuresSteps/checkedStep';
+import { changeVisibility } from "./slices/modalSlices"
+import { visibilitySelector } from './slices/modalSlices';
 import { findPosition } from './figuresSteps/checkedStep';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeHistoryAction, arrayCounter, increment } from './slices/historySlice';
+import PopupResult from "./PopupResult"
 function FullBoard() {
 	const [play] = useSound(soundStep);
 	const [board, setBoard] = useState(data);
@@ -26,7 +28,9 @@ function FullBoard() {
 	const [posUnionKing, setUnionPosKing] = useState([])
 	const [unionOverlaps, setUnionOverlaps] = useState([])
 	const [checkKingAround, setCheckKingAround] = useState([])
+	const [posFigureGaveShah, setPosFigureGaveShah] = useState([])
 	const [stepsKing, setStepsKing] = useState([])
+	const [checkAllUnionOverplaps,setCheckAllUnionOverlaps] = useState([])
 	const [prev, setPrev] = useState([]);
     const [kingCantStep, setKingCantStep] = useState([])
 	const [turn, setTurn] = useState(true);
@@ -35,34 +39,42 @@ function FullBoard() {
 	const [pat,setPat] = useState(false);
 	const letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 	const numbers = ['8', '7', '6', '5', '4', '3', '2', '1'];
+	const visibilityModal = useSelector(visibilitySelector)
 	const dispatch = useDispatch();
-	useEffect(() => {}, 
-
-	[]);
-	useEffect(() => {
-		console.log(stepsKing)
-	},[stepsKing]);
 
 	useEffect(() => {
-		console.log(unionOverlaps)
-	},[unionOverlaps]);
+		console.log(posKing)
+	}, [posKing]);
 
+	useEffect(() => {
+		console.log(limitStep)	
+	},[limitStep]);
+
+	useEffect(() => {
+		console.log(prev)	
+	},[prev]);
 	useEffect(() => {
 		replace();
 		setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
 	}, [next]);
+
 	
 	useEffect(() => {
-		
 		setTurn(!turn);
         findPosKing();
 		findPosUnionKing();
 		setPrev([]);
 		setNext([]);
 		setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
+		checkMat()
 	}, [board]);
+
+	
 	const checkMat = () =>{
 		
+		if(unionOverlaps.length != 0 && checkAllUnionOverplaps.length == 0){
+			dispatch(changeVisibility())
+		}
 	}
     const findPosUnionKing =() =>{
 		board.forEach((row, indexRow) => {
@@ -99,7 +111,17 @@ function FullBoard() {
         })
     }
     
-    
+	const rocker = () => {
+		console.log(prev);
+		console.log(limitStep);
+		if(board[prev[0]][prev[1]]?.name === "king"){
+			console.log("work")
+			limitStep.forEach(el=>{
+				el.length > 2 && console.log(el)
+			})
+		}
+	}
+
 	const step = (obj, board, prev) => {
 		if (prev.length === 0) {
 			setPrev(findPosition(obj, board, prev));
@@ -140,21 +162,26 @@ function FullBoard() {
 						) 
                         setCounter(counter+1)
                        if( !turn)  dispatch(arrayCounter())
-
+						console.log(prev)
 						board[next[0]][next[1]].name =
 							board[prev[0]][prev[1]].name;
 						board[next[0]][next[1]].icon =
 							board[prev[0]][prev[1]].icon;
 						board[next[0]][next[1]].color =
 							board[prev[0]][prev[1]].color;
+						board[next[0]][next[1]].checked = true;
+						rocker();
 						if(board[prev[0]][prev[1]].name === "king" && next.length === 0) {
 							
-							setUnionOverlaps(unionOverlaps)
-						} else {
-							
+							checkUnionOverlaps(unionOverlaps,board, prev,posKing)
+							setCheckAllUnionOverlaps(setUnionOverlaps(unionOverlaps))
+							setPosFigureGaveShah([...posFigureGaveShah])
+						} else { 
+							setPosFigureGaveShah([...next])
+						 	setCheckAllUnionOverlaps(checkUnionOverlaps(checkedShah(board[next[0]][next[1]], board, prev,posKing),board,prev,posKing))
 							setUnionOverlaps(checkedShah(board[next[0]][next[1]], board, prev,posKing));
 						}
-						checkUnionOverlaps(unionOverlaps,board)
+						
 						board[prev[0]][prev[1]].name = '';
 						board[prev[0]][prev[1]].icon = '';
 						board[prev[0]][prev[1]].color = '';
@@ -218,12 +245,17 @@ function FullBoard() {
 					bool = true;
 				}
 			});
+			
 			checkKingAround.forEach((el)=>{
 				if(el[0] === indexRow && el[1] === indexColumn ){
 					bool = false;
 				}
 				
 			})
+			
+			if(posKing[0] === indexRow && posKing[1] === indexColumn){
+				bool = true;
+			}
 		}
 		
 		if(unionOverlaps.length != 0){
@@ -240,13 +272,13 @@ function FullBoard() {
 				}
 			});
 			
-			for (let i = 0; i < unionOverlaps.length - 1; i++) {
+			for (let i = 0; i < unionOverlaps.length; i++) {
 				
-				if(unionOverlaps[i][0] === indexRow && unionOverlaps[i][1] === indexColumn )	{
+				if((unionOverlaps[i][0] === indexRow && unionOverlaps[i][1] === indexColumn)   )	{
 					bool = false;
-				
 				}
 			}
+			
 				kingCantStep.forEach(el =>{
 			
 					if(el[0] === indexRow && el[1] === indexColumn ){
@@ -256,9 +288,14 @@ function FullBoard() {
 				if(posUnionKing[0] === indexRow && posUnionKing[1] === indexColumn){
 					bool = false
 				}
+				if(posKing[0] === indexRow && posKing[1] === indexColumn){
+					bool = true;
+				}
 		}
 			
-		
+		if( posFigureGaveShah[0] == indexRow && posFigureGaveShah[1] == indexColumn){
+			bool = true
+		}
 		
 		return bool;
 	};
@@ -277,9 +314,13 @@ function FullBoard() {
 
 		return result;
 	};
-
+    
 	return (
 		<div className="board">
+			{
+				visibilityModal && <PopupResult/>
+			
+			}
 			{board?.map((rows, indexRow) => (
 				<div className="rows" key={indexRow}>
 					{rows?.map((column, indexColumn) => (
@@ -300,7 +341,7 @@ function FullBoard() {
 									step(column, board, prev);
 									
 									setLimit(selectFigure(column, board, prev,unionOverlaps));
-                                   
+									column.name === "king" && rocker();
 									column.name === "king" ? setKingCantStep(checkKingCantStep(column, board, prev)) : setKingCantStep([])
 									setCheckKingAround(checkKingAroundAndEnemyFigures(column, board, prev))
 									

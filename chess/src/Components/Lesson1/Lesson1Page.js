@@ -14,7 +14,7 @@ function Lesson1Page() {
             case "pawn": 
                return bit(obj) === "x" ? `${obj.prev.slice(0, -1)}` : ""
             case "knight": 
-                return "N"
+                return  "N"
             case "bishop": 
                 return "B"
             case "king": 
