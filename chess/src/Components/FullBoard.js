@@ -3,9 +3,8 @@ import './FullBoard.scss';
 import data from './datas/Data';
 import useSound from 'use-sound';
 import soundStep from '../../src/sounds/step.mp3';
-
+import { selectFigure } from './figuresSteps/selectFigure';
 import { 
-	selectFigure, 
 	checkKingAroundAndEnemyFigures, 
 	checkKingCantStep,
 	checkUnionOverlaps, 
