@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/course-chess%20/static/css/main.81ba55c0.css",
+    "main.js": "/course-chess%20/static/js/main.1a18093f.js",
+    "static/js/845.2de7c7d0.chunk.js": "/course-chess%20/static/js/845.2de7c7d0.chunk.js",
+    "static/js/787.497f1025.chunk.js": "/course-chess%20/static/js/787.497f1025.chunk.js",
+    "static/media/step.mp3": "/course-chess%20/static/media/step.db2f5ba9256700029b76.mp3",
+    "index.html": "/course-chess%20/index.html",
+    "main.81ba55c0.css.map": "/course-chess%20/static/css/main.81ba55c0.css.map",
+    "main.1a18093f.js.map": "/course-chess%20/static/js/main.1a18093f.js.map",
+    "845.2de7c7d0.chunk.js.map": "/course-chess%20/static/js/845.2de7c7d0.chunk.js.map",
+    "787.497f1025.chunk.js.map": "/course-chess%20/static/js/787.497f1025.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.81ba55c0.css",
+    "static/js/main.1a18093f.js"
+  ]
+}
