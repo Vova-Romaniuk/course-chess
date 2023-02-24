@@ -1,6 +1,6 @@
 import { findPosition } from "../helpers";
 
-function checkedBishopStep(obj, board, prev, isBool) {
+export function checkedBishopStep(obj, board, prev, isBool) {
 	let pos = findPosition(obj, board, prev);
 
 	let res = [];

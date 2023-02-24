@@ -5,13 +5,16 @@ import useSound from 'use-sound';
 import soundStep from '../../src/sounds/step.mp3';
 import { selectFigure } from './figuresSteps/selectFigure';
 import { 
-	checkKingAroundAndEnemyFigures, 
+	checkKingAroundAndEnemyFigures,
 	checkKingCantStep,
-	checkUnionOverlaps, 
-	checkedShah } from './figuresSteps/checkedStep';
+	checkUnionOverlaps,
+	checkedShah
+ } 
+	from './figuresSteps/checkKingAroundShah';
+
 import { changeVisibility } from "./slices/modalSlices"
 import { visibilitySelector } from './slices/modalSlices';
-import { findPosition } from './figuresSteps/checkedStep';
+import { findPosition } from './figuresSteps/helpers';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeHistoryAction, arrayCounter, increment } from './slices/historySlice';
 import PopupResult from "./PopupResult"
@@ -41,19 +44,34 @@ function FullBoard() {
 	const visibilityModal = useSelector(visibilitySelector)
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		console.log(posKing)
-	}, [posKing]);
+	// useEffect(() => {
+	// 	console.log(posKing)
+	// }, [posKing]);
 
-	useEffect(() => {
-		console.log(limitStep)	
-	},[limitStep]);
+	// useEffect(() => 	{
+	// 	console.log(limitStep)	
+	// },[limitStep]);
 
+	// useEffect(() => {
+	// 	console.log(prev)	
+	// },[prev]);
+
+	// useEffect(() =>{
+	// 	console.log("unionOverlaps",unionOverlaps)
+	// },[unionOverlaps])
+	// useEffect(() =>{
+	// 	console.log("unionOverlaps",checkAllUnionOverplaps)
+	// },[checkAllUnionOverplaps])
+	useEffect(() =>{
+		console.log(kingCantStep)
+	},[kingCantStep])
+	useEffect(() =>{
+		console.log(posFigureGaveShah)
+	}, [posFigureGaveShah])
 	useEffect(() => {
-		console.log(prev)	
-	},[prev]);
-	useEffect(() => {
+		
 		replace();
+		
 		setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
 	}, [next]);
 
@@ -65,10 +83,39 @@ function FullBoard() {
 		setPrev([]);
 		setNext([]);
 		setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
-		checkMat()
+		//checkMat()
 	}, [board]);
 
-	
+	const rocker = (arrRockerSteps = []) => {
+			
+		if(arrRockerSteps.length != 0){
+			//king
+			board[arrRockerSteps[0]][arrRockerSteps[1]].name = board[posUnionKing[0]][posUnionKing[1]].name;
+			board[arrRockerSteps[0]][arrRockerSteps[1]].icon = board[posUnionKing[0]][posUnionKing[1]].icon;
+			board[arrRockerSteps[0]][arrRockerSteps[1]].color = board[posUnionKing[0]][posUnionKing[1]].color;
+			board[arrRockerSteps[0]][arrRockerSteps[1]].checked = true;
+
+			board[posUnionKing[0]][posUnionKing[1]].name = "";
+			board[posUnionKing[0]][posUnionKing[1]].icon = "" ;
+ 			board[posUnionKing[0]][posUnionKing[1]].color = "" ;
+			//rook
+			board[arrRockerSteps[2]][arrRockerSteps[3]].name = board[arrRockerSteps[4]][arrRockerSteps[5]].name;
+			board[arrRockerSteps[2]][arrRockerSteps[3]].icon = board[arrRockerSteps[4]][arrRockerSteps[5]].icon;
+			board[arrRockerSteps[2]][arrRockerSteps[3]].color = board[arrRockerSteps[4]][arrRockerSteps[5]].color;
+			board[arrRockerSteps[2]][arrRockerSteps[3]].checked = true;
+
+			board[arrRockerSteps[4]][arrRockerSteps[5]].name = "";
+			board[arrRockerSteps[4]][arrRockerSteps[5]].icon = "";
+ 			board[arrRockerSteps[4]][arrRockerSteps[5]].color = "";
+
+		 	setBoard([...board]);
+			setActive(false);
+		 	play();
+		 	setLimit([]);
+		}
+		
+
+	}
 	const checkMat = () =>{
 		
 		if(unionOverlaps.length != 0 && checkAllUnionOverplaps.length == 0){
@@ -110,16 +157,7 @@ function FullBoard() {
         })
     }
     
-	const rocker = () => {
-		console.log(prev);
-		console.log(limitStep);
-		if(board[prev[0]][prev[1]]?.name === "king"){
-			console.log("work")
-			limitStep.forEach(el=>{
-				el.length > 2 && console.log(el)
-			})
-		}
-	}
+	
 
 	const step = (obj, board, prev) => {
 		if (prev.length === 0) {
@@ -147,7 +185,10 @@ function FullBoard() {
 			}
 			if (JSON.stringify(prev) != JSON.stringify(next)) {
 				limitStep?.forEach((element) => {
-					if (JSON.stringify(element) === JSON.stringify(next)) {
+					if(element[0] === next[0] && element[1] === next[1] && element.length > 2){
+						rocker(element);
+					} 
+					else if (JSON.stringify(element) === JSON.stringify(next)) {
                     
 						dispatch(
 							changeHistoryAction(
@@ -161,7 +202,7 @@ function FullBoard() {
 						) 
                         setCounter(counter+1)
                        if( !turn)  dispatch(arrayCounter())
-						console.log(prev)
+						
 						board[next[0]][next[1]].name =
 							board[prev[0]][prev[1]].name;
 						board[next[0]][next[1]].icon =
@@ -169,7 +210,10 @@ function FullBoard() {
 						board[next[0]][next[1]].color =
 							board[prev[0]][prev[1]].color;
 						board[next[0]][next[1]].checked = true;
-						rocker();
+						
+						if(board[prev[0]][prev[1]].name === "king"){
+							console.log(limitStep)
+						}
 						if(board[prev[0]][prev[1]].name === "king" && next.length === 0) {
 							
 							checkUnionOverlaps(unionOverlaps,board, prev,posKing)
@@ -272,14 +316,12 @@ function FullBoard() {
 			});
 			
 			for (let i = 0; i < unionOverlaps.length; i++) {
-				
 				if((unionOverlaps[i][0] === indexRow && unionOverlaps[i][1] === indexColumn)   )	{
 					bool = false;
 				}
 			}
 			
-				kingCantStep.forEach(el =>{
-			
+				kingCantStep.forEach(el =>{			
 					if(el[0] === indexRow && el[1] === indexColumn ){
 						bool = true;
 					}else bool = false
@@ -290,11 +332,12 @@ function FullBoard() {
 				if(posKing[0] === indexRow && posKing[1] === indexColumn){
 					bool = true;
 				}
+				
 		}
 			
-		if( posFigureGaveShah[0] == indexRow && posFigureGaveShah[1] == indexColumn){
-			bool = true
-		}
+		// if( posFigureGaveShah[0] == indexRow && posFigureGaveShah[1] == indexColumn){
+		// 	bool = true
+		// }
 		
 		return bool;
 	};
@@ -340,8 +383,7 @@ function FullBoard() {
 									step(column, board, prev);
 									
 									setLimit(selectFigure(column, board, prev,unionOverlaps));
-									column.name === "king" && rocker();
-									column.name === "king" ? setKingCantStep(checkKingCantStep(column, board, prev)) : setKingCantStep([])
+									column.name === "king" ? setKingCantStep(checkKingCantStep(column, board, prev, posFigureGaveShah)) : setKingCantStep([])
 									setCheckKingAround(checkKingAroundAndEnemyFigures(column, board, prev))
 									
 									setCheckObj(column);

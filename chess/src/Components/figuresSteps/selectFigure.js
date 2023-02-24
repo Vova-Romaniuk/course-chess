@@ -1,13 +1,9 @@
-import { 
-	checkedPawnStep,
-	checkedKnightStep,
-	checkedBishopStep,
-	checkedKingStep,
-	checkedQueenStep,
-	checkedRookStep
- 	} from "./figureSteps/checkedPawnStep";	
-
-
+import { checkedPawnStep} from "./figureSteps/checkedPawnStep";	
+import { checkedKnightStep } from "./figureSteps/checkedKnightStep";
+import { checkedBishopStep } from "./figureSteps/checkedBishopStep";
+import { checkedQueenStep } from "./figureSteps/checkedQueenStep";
+import { checkedRookStep } from "./figureSteps/checkedRookStep";
+import { checkedKingStep } from "./figureSteps/checkedKingStep";
 export function selectFigure(obj, board, prev, overlaps) {
 	switch (obj.name) {
 		case 'pawn':

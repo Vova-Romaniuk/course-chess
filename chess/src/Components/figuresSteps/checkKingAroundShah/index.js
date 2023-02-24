@@ -1,5 +1,5 @@
-import { selectFigure,
-	isContains } from "../selectFigure";
+import { selectFigure } from "../selectFigure";
+import { isContains } from "../helpers";
 import { checkedKnightStepForShah } from "../helpers/allSteps";
 import { checkedPawnStepForShah } from "./figureSteps";
 import { findPositionForShah } from "../helpers";
@@ -58,21 +58,18 @@ export const checkKingAroundAndEnemyFigures = (obj, board, prev) => {
 };
 
 
-
-
-
-
-export const checkKingCantStep = (obj, board, prev) => {
+export const checkKingCantStep = (obj, board, prev, posFigureGaveShah) => {
 	let pos = findPosition(obj, board, prev);
 
 	let kingStep = selectFigure(obj, board, prev);
 	let arrayShahFieldPossibleShahs = [];
+	//console.log(posFigureGaveShah)
 	kingStep.forEach((el) => {
 		let objCurField = {
 			id: board[el[0]][el[1]].id,
 			name: board[el[0]][el[1]].name,
 			icon: board[el[0]][el[1]].icon,
-			checked: false,
+			checked: board[el[0]][el[1]].checked,
 			color: board[pos[0]][pos[1]].color,
 		};
 		let result = stepDiagonal(objCurField, board, prev, true);
@@ -81,23 +78,26 @@ export const checkKingCantStep = (obj, board, prev) => {
 		res = res.concat(
 			checkedKnightStepForShah(objCurField, board, prev, true)
 		);
-		if (enemyAvailable(res, el, board, prev)) {
+		if (enemyAvailable(res, el, board, prev, posFigureGaveShah)) {
 			arrayShahFieldPossibleShahs.push(el);
 		}
 	});
-
+	//console.log(arrayShahFieldPossibleShahs)
 	return arrayShahFieldPossibleShahs;
 };
 
-const findEnemyFigureIsAvailable = (res, pos, board) => {
+const findEnemyFigureIsAvailable = (res, pos, board, prev ,posFigureGaveShah) => {
 	let posFigure = {};
 	let arrPosFigure = [];
+	console.log(board[pos[0]][pos[1]])
+	console.log(posFigureGaveShah)
 	for (let row = 0; row < res.length; row++) {
 		for (let col = 0; col < res[row].length; col++) {
 			if (
-				board[res[row][col][0]][res[row][col][1]].color !=
-					board[pos[0]][pos[1]].color &&
-				board[res[row][col][0]][res[row][col][1]].color != ''
+				(board[res[row][col][0]][res[row][col][1]].color != board[pos[0]][pos[1]].color   
+				&& board[res[row][col][0]][res[row][col][1]].color != '')
+				|| board[res[row][col][0]][res[row][col][1]].color == board[posFigureGaveShah[0]][posFigureGaveShah[1]].color
+
 			) {
 				posFigure = board[res[row][col][0]][res[row][col][1]];
 				arrPosFigure.push(posFigure);
@@ -109,12 +109,13 @@ const findEnemyFigureIsAvailable = (res, pos, board) => {
 	return arrPosFigure;
 };
 
-const enemyAvailable = (res, pos, board, prev) => {
+const enemyAvailable = (res, pos, board, prev, posFigureGaveShah) => {
 	let arrBool = [];
 	let bool = false;
-	let arrPosFigure = findEnemyFigureIsAvailable(res, pos, board, prev);
+	console.log(res);
+	let arrPosFigure = findEnemyFigureIsAvailable(res, pos, board, prev, posFigureGaveShah);
 	// console.log(pos)
-	//console.log(arrPosFigure)
+	console.log(arrPosFigure)
 	arrPosFigure.map((el) => {
 		let availableStep = selectFigure(el, board, prev);
 		if (el.name === 'pawn') {
@@ -133,6 +134,8 @@ const enemyAvailable = (res, pos, board, prev) => {
 			});
 		}
 		arrBool.push(isContains(availableStep, pos));
+		console.log(isContains(availableStep, pos))
+		console.log(availableStep,pos)
 	});
 
 	arrBool.map((el) => {
