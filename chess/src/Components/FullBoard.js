@@ -18,6 +18,8 @@ import { findPosition } from './figuresSteps/helpers';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeHistoryAction, arrayCounter, increment } from './slices/historySlice';
 import PopupResult from "./PopupResult"
+import { intersection } from './figuresSteps/checkKingAroundShah';
+
 function FullBoard() {
 	const [play] = useSound(soundStep);
 	const [board, setBoard] = useState(data);
@@ -44,9 +46,9 @@ function FullBoard() {
 	const visibilityModal = useSelector(visibilitySelector)
 	const dispatch = useDispatch();
 
-	// useEffect(() => {
-	// 	console.log(posKing)
-	// }, [posKing]);
+	useEffect(() => {
+		console.log(checkObj)
+	}, [checkObj]);
 
 	// useEffect(() => 	{
 	// 	console.log(limitStep)	
@@ -60,19 +62,17 @@ function FullBoard() {
 	// 	console.log("unionOverlaps",unionOverlaps)
 	// },[unionOverlaps])
 	// useEffect(() =>{
-	// 	console.log("unionOverlaps",checkAllUnionOverplaps)
+	// 	console.log("checkAllUnionOverlaps",checkAllUnionOverplaps)
 	// },[checkAllUnionOverplaps])
 	useEffect(() =>{
 		console.log(kingCantStep)
 	},[kingCantStep])
-	useEffect(() =>{
-		console.log(posFigureGaveShah)
-	}, [posFigureGaveShah])
+	
 	useEffect(() => {
 		
 		replace();
 		
-		setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
+		setLimitStep(selectFigure(checkObj, board, prev,false, unionOverlaps));
 	}, [next]);
 
 	
@@ -82,8 +82,8 @@ function FullBoard() {
 		findPosUnionKing();
 		setPrev([]);
 		setNext([]);
-		setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
-		//checkMat()
+		setLimitStep(selectFigure(checkObj, board, prev,false, unionOverlaps));
+		checkMat()
 	}, [board]);
 
 	const rocker = (arrRockerSteps = []) => {
@@ -117,8 +117,10 @@ function FullBoard() {
 
 	}
 	const checkMat = () =>{
-		
-		if(unionOverlaps.length != 0 && checkAllUnionOverplaps.length == 0){
+		let check = intersection(unionOverlaps,kingCantStep);
+		console.log(check)
+		console.log(kingCantStep)
+		if(unionOverlaps.length != 0 && checkAllUnionOverplaps.length == 0 && check.length !== 0 ){
 			dispatch(changeVisibility())
 		}
 	}
@@ -162,7 +164,7 @@ function FullBoard() {
 	const step = (obj, board, prev) => {
 		if (prev.length === 0) {
 			setPrev(findPosition(obj, board, prev));
-			setLimitStep(selectFigure(obj, board, prev,unionOverlaps));
+			setLimitStep(selectFigure(obj, board, prev,false ,unionOverlaps));
 		}
 		if (prev.length != 0) {
 			setNext(findPosition(obj, board, prev,posKing));
@@ -179,7 +181,7 @@ function FullBoard() {
 			) {
 				
 				setPrev(next);
-				setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
+				setLimitStep(selectFigure(checkObj, board, prev,false, unionOverlaps));
 				setNext([]);
 				setActive(false);
 			}
@@ -234,7 +236,7 @@ function FullBoard() {
 						setLimit([]);
 					} else {
 						
-						setLimitStep(selectFigure(checkObj, board, prev,unionOverlaps));
+						setLimitStep(selectFigure(checkObj, board, prev,false, unionOverlaps));
 						setNext([]);
 						setActive(false);
 					}
@@ -268,7 +270,7 @@ function FullBoard() {
 		}
 
 	
-			kingCantStep.forEach(el =>{
+			kingCantStep?.forEach(el =>{
 		
 				if(el[0] === indexRow && el[1] === indexColumn ){
 					bool = true;
@@ -302,26 +304,41 @@ function FullBoard() {
 		}
 		
 		if(unionOverlaps.length != 0){
+			
 			if(obj.name === ''){
 				bool = true
 			}
-			limitStep.forEach((el) => {
-				if (
-					el[0] === indexRow &&
-					el[1] === indexColumn && 
-					board[indexRow][indexColumn] != ''
-				) {
-					bool = true;
-				}
-			});
+			if(checkObj.name === "king"){
+				limitStep.forEach((el) => {
+					if (
+						el[0] === indexRow &&
+						el[1] === indexColumn && 
+						board[indexRow][indexColumn] != ''
+					) {
+						bool = false;
+					}
+				});
+			}else {
+				limitStep.forEach((el) => {
+					if (
+						el[0] === indexRow &&
+						el[1] === indexColumn && 
+						board[indexRow][indexColumn] != ''
+					) {
+						bool = true;
+					}
+				});
+			}
+				
+			
+				
 			
 			for (let i = 0; i < unionOverlaps.length; i++) {
 				if((unionOverlaps[i][0] === indexRow && unionOverlaps[i][1] === indexColumn)   )	{
 					bool = false;
 				}
 			}
-			
-				kingCantStep.forEach(el =>{			
+				kingCantStep?.forEach(el =>{			
 					if(el[0] === indexRow && el[1] === indexColumn ){
 						bool = true;
 					}else bool = false
@@ -347,7 +364,8 @@ function FullBoard() {
 		limit?.forEach((element) => {
 			if (element[0] == indexRow && element[1] == indexColumn && !selectTurn(column,indexColumn,indexRow)) {
 				result = 'box possible-step';
-			}
+			} 
+			
 		});
 		if (indexRow === next[0] && indexColumn === next[1]) {
 			return result;
@@ -382,8 +400,8 @@ function FullBoard() {
 								onClick={() => {
 									step(column, board, prev);
 									
-									setLimit(selectFigure(column, board, prev,unionOverlaps));
-									column.name === "king" ? setKingCantStep(checkKingCantStep(column, board, prev, posFigureGaveShah)) : setKingCantStep([])
+									setLimit(selectFigure(column, board, prev,false, unionOverlaps));
+									column.name === "king" ? setKingCantStep(checkKingCantStep(column, board, prev, posFigureGaveShah)) : setKingCantStep([...kingCantStep])
 									setCheckKingAround(checkKingAroundAndEnemyFigures(column, board, prev))
 									
 									setCheckObj(column);

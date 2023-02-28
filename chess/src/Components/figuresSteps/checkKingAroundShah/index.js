@@ -1,5 +1,6 @@
 import { selectFigure } from "../selectFigure";
 import { isContains } from "../helpers";
+import { checkedKingStep } from "../figureSteps/checkedKingStep";
 import { checkedKnightStepForShah } from "../helpers/allSteps";
 import { checkedPawnStepForShah } from "./figureSteps";
 import { findPositionForShah } from "../helpers";
@@ -46,14 +47,14 @@ export const checkKingAroundAndEnemyFigures = (obj, board, prev) => {
 		}
 	}
 
-	let curentAvailable = selectFigure(obj, board, prev);
-	let availableStep = selectFigure(posFigure, board, prev);
+	let curentAvailable = selectFigure(obj, board, prev,false);
+	let availableStep = selectFigure(posFigure, board, prev,false);
 	let posEnemy = findPosition(posFigure, board, prev);
 
 	availableStep.push(posEnemy);
 
 	return isContains(availableStep, pos)
-		? intersection(curentAvailable, availableStep)
+		? (curentAvailable, availableStep)
 		: [];
 };
 
@@ -61,9 +62,9 @@ export const checkKingAroundAndEnemyFigures = (obj, board, prev) => {
 export const checkKingCantStep = (obj, board, prev, posFigureGaveShah) => {
 	let pos = findPosition(obj, board, prev);
 
-	let kingStep = selectFigure(obj, board, prev);
+	let kingStep = selectFigure(obj, board, prev,false);
 	let arrayShahFieldPossibleShahs = [];
-	//console.log(posFigureGaveShah)
+	
 	kingStep.forEach((el) => {
 		let objCurField = {
 			id: board[el[0]][el[1]].id,
@@ -72,25 +73,21 @@ export const checkKingCantStep = (obj, board, prev, posFigureGaveShah) => {
 			checked: board[el[0]][el[1]].checked,
 			color: board[pos[0]][pos[1]].color,
 		};
-		let result = stepDiagonal(objCurField, board, prev, true);
+		let result = objCurField.name === "" ? stepDiagonal(objCurField, board, prev, true) : stepDiagonal(objCurField, board, prev, false) ;
 
-		let res = result.concat(stepDirect(objCurField, board, prev, true));
-		res = res.concat(
-			checkedKnightStepForShah(objCurField, board, prev, true)
-		);
+		let res = objCurField.name === "" ? result.concat(stepDirect(objCurField, board, prev, true)) : result.concat(stepDirect(objCurField, board, prev, false));
+		res = objCurField.name === "" ? res.concat(checkedKnightStepForShah(objCurField, board, prev, true)) : res.concat(checkedKnightStepForShah(objCurField, board, prev, true)) ;
 		if (enemyAvailable(res, el, board, prev, posFigureGaveShah)) {
 			arrayShahFieldPossibleShahs.push(el);
 		}
 	});
-	//console.log(arrayShahFieldPossibleShahs)
+	
 	return arrayShahFieldPossibleShahs;
 };
 
 const findEnemyFigureIsAvailable = (res, pos, board, prev ,posFigureGaveShah) => {
 	let posFigure = {};
 	let arrPosFigure = [];
-	console.log(board[pos[0]][pos[1]])
-	console.log(posFigureGaveShah)
 	for (let row = 0; row < res.length; row++) {
 		for (let col = 0; col < res[row].length; col++) {
 			if (
@@ -112,16 +109,14 @@ const findEnemyFigureIsAvailable = (res, pos, board, prev ,posFigureGaveShah) =>
 const enemyAvailable = (res, pos, board, prev, posFigureGaveShah) => {
 	let arrBool = [];
 	let bool = false;
-	console.log(res);
+	
 	let arrPosFigure = findEnemyFigureIsAvailable(res, pos, board, prev, posFigureGaveShah);
-	// console.log(pos)
-	console.log(arrPosFigure)
+	
 	arrPosFigure.map((el) => {
-		let availableStep = selectFigure(el, board, prev);
+		let availableStep = selectFigure(el, board, prev,true);
 		if (el.name === 'pawn') {
 			availableStep = checkedPawnStepForShah(el, board, prev);
 			let posPawm = findPositionForShah(el, board);
-			//console.log(availableStep)
 			let res = availableStep;
 			res.forEach((element) => {
 				if (
@@ -134,14 +129,11 @@ const enemyAvailable = (res, pos, board, prev, posFigureGaveShah) => {
 			});
 		}
 		arrBool.push(isContains(availableStep, pos));
-		console.log(isContains(availableStep, pos))
-		console.log(availableStep,pos)
 	});
 
 	arrBool.map((el) => {
 		if (el) bool = true;
 	});
-
 	return bool;
 };
 
@@ -177,19 +169,20 @@ export const checkedShah = (obj, board, prev, kingPos) => {
 	res = res.concat(checkedKnightStepForShah(obj, board, prev, true));
 
 	let unionSteps = unionAvailable(res, pos, board, prev);
-	let kingSteps = selectFigure(objKing, board, prev, unionSteps);
+	let kingSteps = checkedKingStep(objKing, board, prev,false);
+	//console.log(kingSteps)
 	let resKingSteps = kingSteps;
 	if (unionSteps.length != 0) {
 		resKingSteps?.map((element) => {
 			unionSteps[0].forEach((el) => {
-				if (element[0] === el[0] && element[1] === el[1]) {
+				if (element[0] === el[0] && element[1] === el[1] ) {
 					let index = res.indexOf(element);
 					kingSteps.splice(index, 1);
 				}
 			});
 		});
 	}
-
+	// console.log(kingSteps)
 	unionSteps = unionSteps.length != 0 ? unionSteps[0].concat(kingSteps) : [];
 	return unionSteps;
 };
@@ -197,9 +190,8 @@ export const checkedShah = (obj, board, prev, kingPos) => {
 export const checkUnionOverlaps = (overlaps, board, prev, posKing) => {
 	return checkAllUnionFiguresOveplapsWhenShah(overlaps, board, prev, posKing);
 };
-const intersection = (curentAvailable, availableStep) => {
+export const intersection = (curentAvailable, availableStep) => {
 	let res = [];
-
 	curentAvailable?.forEach((el1) => {
 		availableStep?.forEach((el2) => {
 			if (el1[0] === el2[0] && el1[1] === el2[1]) {
@@ -219,7 +211,7 @@ const checkAllUnionFiguresOveplapsWhenShah = (overlaps, board, prev, king) => {
 					col.color == board[king[0]][king[1]].color &&
 					col.name != 'king'
 				) {
-					let currentFig = selectFigure(col, board, prev);
+					let currentFig = selectFigure(col, board, prev,false);
 					let res = intersection(overlaps, currentFig);
 					res.length != 0 && result.push(res);
 				}

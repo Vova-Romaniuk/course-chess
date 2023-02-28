@@ -13,10 +13,12 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] - 1; i >= n; i--) {
 		for (let j = pos[1] + 1; j <= 7; j++) {
 			if (j == ex) {
-				if (board[pos[0]][pos[1]].color === board[i][j].color) {
-					bool = true;
-					break;
-				}
+				if(!isBool){
+					if (board[pos[0]][pos[1]].color === board[i][j].color) {
+						bool = true;
+						break;
+					}
+				}	
 				res.push([i, j]);
 				if (
 					board[pos[0]][pos[1]].color !== board[i][j].color &&
@@ -40,10 +42,12 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] - 1; i >= n; i--) {
 		for (let j = pos[1] - 1; j >= 0; j--) {
 			if (j == ex) {
-				if (board[pos[0]][pos[1]].color === board[i][j].color) {
-					bool = true;
-					break;
-				}
+				if(!isBool){
+					if (board[pos[0]][pos[1]].color === board[i][j].color) {
+						bool = true;
+						break;
+					}
+				}	
 				res.push([i, j]);
 
 				if (
@@ -69,10 +73,13 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] + 1; i <= n; i++) {
 		for (let j = pos[1] - 1; j >= 0; j--) {
 			if (j == ex) {
-				if (board[pos[0]][pos[1]].color === board[i][j].color) {
-					bool = true;
-					break;
+				if(!isBool){
+					if (board[pos[0]][pos[1]].color === board[i][j].color) {
+						bool = true;
+						break;
+					}
 				}
+				
 				res.push([i, j]);
 
 				if (
@@ -97,10 +104,12 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] + 1; i <= n; i++) {
 		for (let j = pos[1] + 1; j <= 7; j++) {
 			if (j == ex) {
-				if (board[pos[0]][pos[1]].color === board[i][j].color) {
-					bool = true;
-					break;
-				}
+				if(!isBool){
+					if (board[pos[0]][pos[1]].color === board[i][j].color) {
+						bool = true;
+						break;
+					}
+				}	
 				res.push([i, j]);
 
 				if (

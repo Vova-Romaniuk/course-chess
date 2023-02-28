@@ -5,7 +5,7 @@ import {
 	checkRocker
  } from "../rocker/checkRocker";
  
-export function checkedKingStep(obj, board, prev, overlaps = []) {
+export function checkedKingStep(obj, board, prev,isBool, overlaps = []) {
 	let pos = findPosition(obj, board, prev);
 	let res = [];
 	res.push([pos[0] + 1, pos[1]]);
@@ -21,11 +21,11 @@ export function checkedKingStep(obj, board, prev, overlaps = []) {
 	);
 	res = [...arr];
 	arr.map((element, index) => {
-	  if (
-		board[pos[0]][pos[1]].color === board[element[0]][element[1]].color
-	  ) {
+	 	if (
+			board[pos[0]][pos[1]].color === board[element[0]][element[1]].color
+	  	) {
 		let index = res.indexOf(element);
-		res.splice(index, 1);
+		res.splice(index, 1);	
 	  }
 	});
 	let arrPositionUnionRooks = [];
@@ -54,6 +54,6 @@ export function checkedKingStep(obj, board, prev, overlaps = []) {
 		}
 	  });
 	});
-	//console.log("res2",res)
+	console.log("res2",res)
 	return res;
   }

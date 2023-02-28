@@ -1,6 +1,6 @@
 import { findPosition } from "../helpers";
 
-export function checkedKnightStep(obj, board, prev) {
+export function checkedKnightStep(obj, board, prev, isBool) {
 	let pos = findPosition(obj, board, prev);
 	let res = [];
 	res.push([pos[0] + 2, pos[1] + 1]);
@@ -17,11 +17,11 @@ export function checkedKnightStep(obj, board, prev) {
 	);
 	res = [...arr];
 	arr.map((element, index) => {
-		if (
-			board[pos[0]][pos[1]].color === board[element[0]][element[1]].color
-		) {
-			let index = res.indexOf(element);
-			res.splice(index, 1);
+		if(!isBool){
+			if (board[pos[0]][pos[1]].color === board[element[0]][element[1]].color){
+				let index = res.indexOf(element);
+				res.splice(index, 1);
+			}	
 		}
 	});
 	return res;
