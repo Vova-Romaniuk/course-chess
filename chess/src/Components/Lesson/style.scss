@@ -1,0 +1,38 @@
+.lesson{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	.board-lesson{
+		width: 70%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		.board{
+			width: 550px;
+			height: 550px;
+		}
+		&>button{
+			cursor: pointer;
+			width: fit-content;
+			font-size: 20px;
+			height: fit-content;
+			padding: 10px 20px;
+			border-radius:15px ;
+			margin: 0 150px 30px auto;
+			border:3px solid rgb(33, 55, 44);
+			color:rgb(33, 55, 44);
+			background: white;
+			outline: none;
+			&:hover{
+				background: rgb(168, 214, 150);
+			}
+		}
+	}
+	.sidebar-lesson{
+		color:white;
+		background: rgb(33, 55, 44);
+		width: 30%;
+		height: 100%;
+	}
+}
+

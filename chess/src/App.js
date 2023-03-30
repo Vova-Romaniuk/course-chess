@@ -1,23 +1,25 @@
 import './App.css';
 import React from 'react';
-import {BrowserRouter, Routes, Route} from "react-router-dom"
-import MainPage from './Components/MainPage';
-import Menu from "./Components/Shared/Menu"
-import Lesson1Page from './Components/Lesson1/Lesson1Page';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Menu from './Components/Menu/Menu';
+import { Container } from './Components/Container';
+import FullBoard from './Components/BoardTraining/FullBoard';
+import { Lesson } from './Components/Lesson';
+
 function App() {
-  return (
-    <div className="App">
-      <BrowserRouter>
-      
-      <Menu/>
-        <Routes>
-       
-          <Route path="/" element={<React.Fragment><MainPage/></React.Fragment>}/>
-          <Route path="/lesson1" element={<React.Fragment><Lesson1Page/></React.Fragment>}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
-  );
+	return (
+		<div className='App'>
+			<BrowserRouter>
+				<Menu />
+				<Container>
+					<Routes>
+						<Route path='/' element={<FullBoard />} />
+						<Route path='/lesson/:figure' element={<Lesson />} />
+					</Routes>
+				</Container>
+			</BrowserRouter>
+		</div>
+	);
 }
 
 export default App;
