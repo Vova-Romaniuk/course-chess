@@ -14,13 +14,16 @@ export function Lesson({ }) {
 	const [board, setBoard] = useState(defaultData);
 	const [lessonFig, setLessonFig] = useState(figureLessons(figure));
 	const [iter, setIter] = useState(0);
-	const [checkKingCantStep, setCheckKingCantStep] = useState([])
+	const [iterLight, setIterLight] = useState(0);
+	const [checkKingCantStep, setCheckKingCantStep] = useState([]);
+	const [light, setLight] = useState([]);
 	const [intervalId, setIntervalId] = useState(null)
+	const [intervalIdLight, setIntervalIdLight] = useState(null)
 	const [startLoop, setStartLoop] = useState(false)
 	const [start, setStart] = useState(false);
 	const [limit, setLimit] = useState([]);
-	const [play] = useSound(sounds[figure]);
-	//const [play] = useSound(queenSound);
+	const [play] = useSound(sounds["king"]);
+
 	useEffect(() => { }, [])
 	useEffect(() => {
 		setBoard([...defaultData])
@@ -30,23 +33,32 @@ export function Lesson({ }) {
 	}, [figure])
 
 	useEffect(() => {
-		board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].name = lessonFig.name;
-		board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].icon = lessonFig.icon;
-		board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].color = 'white';
-		setBoard([...board]);
-		setLimit(selectFigure(board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]], board, lessonFig.firstPosition));
+		if (figure != "game-goal") {
+			board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].name = lessonFig.name;
+			board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].icon = lessonFig.icon;
+			board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].color = 'white';
+			setBoard([...board]);
+			setLimit(selectFigure(board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]], board, lessonFig.firstPosition));
+		} else {
+			setBoard([...board]);
+		}
+
 	}, [lessonFig]);
 
 	useEffect(() => {
-		if (iter > 0) {
-			setCheckKingCantStep(checkKingsNotMeets(board, lessonFig.lesson[iter - 1].currentFig.position))
-		}
+		if (figure != "game-goal") {
+			if (iter > 0) {
+				setCheckKingCantStep(checkKingsNotMeets(board, lessonFig.lesson[iter - 1].currentFig.position))
+			}
+		} else setLight(lessonFig.fieldLighted[iter])
+
 	}, [iter])
 
 	useEffect(() => {
 		if (start) {
 			loop()
 		}
+
 	}, [intervalId])
 	const handleStep = (i) => {
 		let otherFigLength = lessonFig.lesson[i].otherFig.position.length;
@@ -144,27 +156,83 @@ export function Lesson({ }) {
 			});
 		}
 	}
+	const stepGameGoal = (i) => {
+		if (i >= 6) {
+			setBoard((prevBoard) => {
+				let boardCopy = defaultData.map((row) => row.slice());
+
+				lessonFig.lesson[i].map((item) => {
+					boardCopy[item.position[0]][item.position[1]] = {
+						...boardCopy[item.position[0]][item.position[0]],
+						name: item.name,
+						icon: item.icon,
+						color: item.color,
+					};
+				})
+				return boardCopy;
+			})
+		} else {
+			setBoard((prevBoard) => {
+				const boardCopy = prevBoard.map((row) => row.slice());
+				lessonFig.lesson[i].map((item) => {
+					boardCopy[item.position[0]][item.position[1]] = {
+						...boardCopy[item.position[0]][item.position[0]],
+						name: item.name,
+						icon: item.icon,
+						color: item.color,
+					};
+				})
+				return boardCopy;
+			})
+		}
+
+	}
 	const handleClick = () => {
 		loop();
-		play()
+		if (figure.name === "game-goal") {
+			loopLight()
+		}
+		// play()
 	}
+
+	function loopLight() {
+		const id = setTimeout(() => {
+			setIterLight(iterLight => {
+				if (iterLight === lessonFig.times.length) {
+					clearTimeout(intervalIdLight)
+					setIntervalIdLight(null)
+					return iterLight;
+				} else {
+					setIntervalIdLight(id);
+					setLight(lessonFig.fieldLighted[iterLight]);
+					return iterLight + 1;
+				}
+
+			})
+		}, lessonFig.timesLight[iterLight])
+	}
+
 	function loop() {
 		const id = setTimeout(() => {
 			setIter(iter => {
-				if (iter === lessonFig.lesson.length) {
+				if (iter === lessonFig.times.length) {
 					clearTimeout(intervalId)
 					setIntervalId(null)
 					return iter;
 				} else {
-					setIntervalId(id)
-					handleStep(iter);
+					setIntervalId(id);
+
+					if (figure != "game-goal") {
+						handleStep(iter);
+					}
+					if (figure === "game-goal") stepGameGoal(iter);
+
 					return iter + 1;
 				}
+
 			})
 		}, lessonFig.times[iter])
-
 	}
-
 	return <div className="lesson">
 		<div className="board-lesson">
 			<BoardLesson
@@ -174,7 +242,7 @@ export function Lesson({ }) {
 				setIsStart={setStart}
 				checkKingCantStep={checkKingCantStep}
 				iter={iter}
-			// isClick={start}
+				lightArr={light}
 			/>
 		</div>
 		<div className="sidebar-lesson">

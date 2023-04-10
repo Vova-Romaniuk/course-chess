@@ -5,6 +5,7 @@ import {
 	BISHOP_LESSON,
 	ROOK_LESSON,
 	QUEEN_LESSON,
+	GAME_GOAL,
 } from '../constants/constants';
 export const figureLessons = (name) => {
 	switch (name) {
@@ -20,6 +21,8 @@ export const figureLessons = (name) => {
 			return QUEEN_LESSON;
 		case 'pawn':
 			return PAWN_LESSON;
+		case 'game-goal':
+			return GAME_GOAL;
 		default:
 			return {};
 	}

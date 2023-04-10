@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './BoardLesson.scss';
 import { LETTERS, NUMBERS } from '../../constants/constants';
 
-function BoardLesson({
+function BoardLessonGoal({
 	limit,
 	board,
 	handleLoop,
 	setIsStart,
 	checkKingCantStep,
-	lightArr,
 }) {
 	const [start, setStart] = useState(false);
 
+	useEffect(() => { }, [start]);
 	const notIntersection = (curentAvailable, availableStep) => {
 		let res = [];
 		curentAvailable?.forEach((el1) => {
@@ -34,11 +34,6 @@ function BoardLesson({
 			possibleStep?.forEach((element) => {
 				if (element[0] == indexRow && element[1] == indexColumn) {
 					result = 'box possible-step';
-				}
-			});
-			lightArr?.forEach((el) => {
-				if (el[0] == indexRow && el[1] == indexColumn) {
-					result = 'box light';
 				}
 			});
 		}
@@ -90,4 +85,4 @@ function BoardLesson({
 		</div>
 	);
 }
-export default BoardLesson;
+export default BoardLessonGoal;

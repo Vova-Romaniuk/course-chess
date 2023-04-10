@@ -156,7 +156,7 @@ export const KING_LESSON = {
 	icon: '/images/king-white.png',
 	title: 'Король',
 	description:
-		'Король є головною фігурою в шахах від нього залежить результат гри, король ходить тільки на одне поле в будь-якому напрямку',
+		'Король є головною фігурою в шахах від нього залежить результат гри, король ходить тільки на одне поле в будь-якому напрямку. Це єдина фігура яку неможливо побити',
 	textLesson:
 		'Зараз на дошці ви бачите на яке поле може походити король давайте зробимо декілька ходів підемо на поле f5 потім давайте підемо на e5 після чого на d6 зараз добавимо ворожого короля на поле d8 за правилами відстань між королями не може бути меншою ніж на одне поле  як ви бачите білий король неможе перейти на поля c7, d7 та e7 тож давайте ступимо на поле c5 також король не може ходити на ті поля на які може походити ворожа фігура',
 	times: [11000, 2500, 2000, 20000],
@@ -474,7 +474,7 @@ export const PAWN_LESSON = {
 	icon: '/images/pawn-white.png',
 	title: 'Пішак',
 	description:
-		'Пішак це фігура яка не ходить тільки вперед не може ходити назад, також має змогу першим ходом ходити на 2 клітинки вперед проте захоплює поле пішак тільки на 1 поле по діагоналі.',
+		'Пішак це фігура яка ходить тільки вперед не може ходити назад, також має змогу першим ходом ходити на 2 клітинки вперед проте захоплює поле пішак тільки на 1 поле по діагоналі.',
 	textLesson:
 		'В даний момент на дошці знаходиться пішак початкова позиція всіх пішаків  горизонталь 7 та 2 це початкова його позиція з неї він може походити на одну або дві клітинки, але це тільки перший хід всі наступні кроки на одну клітинку тож давайте підемо на поле e4 і добавимо ворожу фігуру на поле e5 зараз білий пішак може або побити фігуру на d4 або піти на одне поле вперед давайте поб`ємо на e5 аналогічна ситуація і з чорним пішаком додамо дану фігуру на b7 наступним кроком буде поле b6 як видно після першого ходу наступні кроки тільки на одну клітинку вперед також в пішака є ще один цікавий трюк проте про нього ми поговоримо в іншому уроці.',
 	times: [26500, 13100, 7300, 3800],
@@ -535,6 +535,645 @@ export const PAWN_LESSON = {
 				color: '',
 			},
 		},
+	],
+};
+export const GAME_GOAL = {
+	title: 'Гра та мета',
+	icon: '/images/game-goal.png',
+	description:
+		'Головною метою шахів є поставити мат ворожому королю, розташування - фігур по кутках тури, поруч лицарі, за ними слони, королі та королеви займають центральні поля королева поле свого кольору. Всі пішаки йдуть на другому та сьомому рядах. В цій грі спочатку ходять білі фігури потім чорні',
+	fieldLighted: [
+		[
+			[1, 0],
+			[1, 1],
+			[1, 2],
+			[1, 3],
+			[1, 4],
+			[1, 5],
+			[1, 6],
+			[1, 7],
+			[6, 0],
+			[6, 1],
+			[6, 2],
+			[6, 3],
+			[6, 4],
+			[6, 5],
+			[6, 6],
+			[6, 7],
+		],
+		[
+			[0, 0],
+			[0, 7],
+			[7, 0],
+			[7, 7],
+		],
+		[
+			[0, 1],
+			[0, 6],
+			[7, 1],
+			[7, 6],
+		],
+		[
+			[0, 2],
+			[0, 5],
+			[7, 2],
+			[7, 5],
+		],
+		[
+			[0, 3],
+			[7, 3],
+		],
+		[
+			[0, 4],
+			[7, 4],
+		],
+	],
+	times: [
+		2000, 2000, 2000, 2000, 2000, 5000, 5000, 5000, 5000, 5000, 5000, 5000,
+		5000, 5000, 5000, 5000, 5000, 5000, 5000, 2000, 2000, 2000,
+	],
+	timesLight: [2000, 2000, 2000, 2000, 2000, 2000],
+	textLesson:
+		'Зараз розглянемо розміщення фігур на дошці отож розпочнімо друга та сьомі горизонталі це пішаки відповідних кольорів, далі по кутах розміщені тури після них розміщюються лицарі, після яких ідуть слони далі центральні поля займає король та королева, королева відповідно поле свого кольору, а далі король на позиціях e4 та e8 відповідно. Зараз розглянемо що означає мат, шах та пат, отож шах - це напад на короля після якого король має відійти на не шаховане поле або союзна фігура має закрити свого короля від атаки якщо це можливо тож давайте розглянемо приклад давайте додамо чорного короля на поле с7 та білу королеву на поле f5, а також чорного коня на поле e5 і слона на клітинку з ідентифікатором e4 зараз хід білих давайте дамо шах чорному королю походивши на поле f7 після того як король опинився під шахом то не всі чорні фігури можуть зробити хід, походити  може тільки кінь він може або побити білу королеву або прикрити короля на поле d7 і ще один хід який можуть зробити чорні фігури це сам король який може відійти на не шахове поле. Одразу ж давайте розглянемо варіант мату, мат це коли королю дають шах і він немає шляху ні відійти ні його не можуть прикрити його союзні фігури як приклад знову добавимо чорного короля на поле с8 та білі тури на h7 та g1 зараз білі починають хід тож давайте походимо турою з g1 на g8 зараз чорному королю шах і мат це означає, що білі перемогли залишився випадок пату, пат - це коли на короля ніхто не напав але він і його союзні фігури немають куди походити, давайте розглянемо приклад добавимо декілька фігур, білі починають якщо білим королем переміститись на поле h6 то це буде означати пат тобто нічия. Також розкажу вам про рокеровку та особливості ходів пішаком розпочнемо з рокеровок, рокеровка це рух короля з його початкової позиції через одне поле по горизонталі з одночасним рухом тури на це поле. Рокеровки бувають довгі та короткі розглянемо приклад короткої рокеровки для білих фігур, а зараз приклад довгої для чорних правила щодо рокеровки, якщо хочаб одна фігура яка бере  участь в рокеровці здійнювала хід до рокеровки то рокерування неможливе. Залишилось розглянути дві особливості для пішака коли пішак досягає останньої ворожої лінії він може перетворитись в будь яку іншу фігуру окрім короля. Другою особливістю є такий термін як "взяття на проході" це коли пішак одного гравця забирає пішака суперника. Взяття на проході можливе в ситуації, якщо пішак перемістився з початкового положення на два поля вперед та став на сусідню клітину з пішаком суперника. При цьому пішака, який взяв пішака суперника на проході, ставлять на 1 клітинку за збитим пішаком. Взяття на проході можливе лише наступним ходом, і якщо гравець одразу не використав своє право взяти пішак на проході, то надалі взяття цього пішака на проході неможливе. Розглянемо приклад добавимо білого пішака на поле d5 та чорного на поле e7 зараз чорні починають хід і пішак робить хід на поле e5 наступний хід за білими оскільки всі умови співпадають з другою особливістю то ми можемо взяти на проході чорного пішака.',
+	lesson: [
+		[
+			{
+				position: [1, 0],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 1],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 2],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 2],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 3],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 4],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 5],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 6],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 7],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+			{
+				position: [6, 0],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 1],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 2],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 3],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 4],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 5],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 6],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 7],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 0],
+				name: 'rook',
+				icon: '/images/rook-black.png',
+				color: 'black',
+			},
+			{
+				position: [0, 7],
+				name: 'rook',
+				icon: '/images/rook-black.png',
+				color: 'black',
+			},
+			{
+				position: [7, 7],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 0],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 1],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [0, 6],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [7, 1],
+				name: 'knight',
+				icon: '/images/knight-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 6],
+				name: 'knight',
+				icon: '/images/knight-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 2],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [0, 5],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [7, 2],
+				name: 'bishop',
+				icon: '/images/bishop-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 5],
+				name: 'bishop',
+				icon: '/images/bishop-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 3],
+				name: 'queen',
+				icon: '/images/queen-black.png',
+				color: 'black',
+			},
+			{
+				position: [7, 3],
+				name: 'queen',
+				icon: '/images/queen-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 4],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [7, 4],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [1, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [3, 4],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 4],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [3, 5],
+				name: 'queen',
+				icon: '/images/queen-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 1],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [1, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [3, 4],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 4],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 5],
+				name: 'queen',
+				icon: '/images/queen-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 1],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [1, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 3],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 4],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 5],
+				name: 'queen',
+				icon: '/images/queen-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 1],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [1, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [3, 4],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 4],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 5],
+				name: 'queen',
+				icon: '/images/queen-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 1],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [2, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [3, 4],
+				name: 'knight',
+				icon: '/images/knight-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 4],
+				name: 'bishop',
+				icon: '/images/bishop-black.png',
+				color: 'black',
+			},
+			{
+				position: [1, 5],
+				name: 'queen',
+				icon: '/images/queen-white.png',
+				color: 'white',
+			},
+			{
+				position: [6, 1],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 2],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 5],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+			{
+				position: [1, 7],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [4, 2],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+			{
+				position: [0, 5],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+			{
+				position: [1, 7],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 7],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [2, 6],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 6],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+			{
+				position: [3, 0],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [4, 0],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+		],
+		[
+			{
+				position: [0, 7],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [2, 7],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 6],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+			{
+				position: [3, 0],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [4, 0],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+		],
+		[
+			{
+				position: [7, 4],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 7],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [7, 6],
+				name: 'king',
+				icon: '/images/king-white.png',
+				color: 'white',
+			},
+			{
+				position: [7, 5],
+				name: 'rook',
+				icon: '/images/rook-white.png',
+				color: 'white',
+			},
+		],
+		[
+			{
+				position: [0, 4],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [0, 0],
+				name: 'rook',
+				icon: '/images/rook-black.png',
+				color: 'black',
+			},
+		],
+		[
+			{
+				position: [0, 2],
+				name: 'king',
+				icon: '/images/king-black.png',
+				color: 'black',
+			},
+			{
+				position: [0, 3],
+				name: 'rook',
+				icon: '/images/rook-black.png',
+				color: 'black',
+			},
+		],
+		[
+			{
+				position: [3, 4],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [1, 5],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+		],
+		[
+			{
+				position: [3, 4],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+			{
+				position: [3, 5],
+				name: 'pawn',
+				icon: '/images/pawn-black.png',
+				color: 'black',
+			},
+		],
+		[
+			{
+				position: [2, 5],
+				name: 'pawn',
+				icon: '/images/pawn-white.png',
+				color: 'white',
+			},
+		],
 	],
 };
 export const LETTERS = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];

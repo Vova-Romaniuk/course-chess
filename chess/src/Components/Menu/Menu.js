@@ -21,6 +21,13 @@ function Menu() {
 								</a>
 							</li>
 						))}
+						<li>
+							<a
+								activeClassName='active'
+								href={`/lesson/game-goal`}>
+								Гра та мета
+							</a>
+						</li>
 					</ul>
 				</li>
 			</ul>

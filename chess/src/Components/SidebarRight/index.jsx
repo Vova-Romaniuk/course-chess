@@ -1,23 +1,21 @@
 import React, { useRef, useState, useEffect } from "react";
 import { TypeAnimation } from 'react-type-animation';
+import ScrollableFeed from 'react-scrollable-feed';
 import "./style.scss"
 
 export default function SidebarRight({ title, description, icon, textLesson, isType }) {
-	const [text, setText] = useState('');
+	const textRef = useRef(null)
+	const scrollRef = useRef(null);
 
-	const handleTextChange = event => {
-		setText(event.target.value);
-	};
-	const textAreaRef = useRef(null);
-	const resizeTextArea = () => {
-		console.log("work")
-		textAreaRef.current.style.height = "20px";
-		textAreaRef.current.style.height = `${textAreaRef.current.scrollHeight}px`;
-	};
-	const noop = (e) => {
-		e.preventDefault();
-		return false;
-	}
+	useEffect(() => {
+		const divElement = scrollRef.current;
+
+		if (divElement) {
+			divElement.scrollTop = divElement.scrollHeight;
+		}
+
+	}, [scrollRef.current?.scrollHeight]);
+
 	return (
 		<div className="right-sidebar ">
 			<div className="title">
@@ -33,30 +31,16 @@ export default function SidebarRight({ title, description, icon, textLesson, isT
 			{
 				isType &&
 				(
-					<div
-						className="text-lesson scroll-none"
-						ref={textAreaRef}
-						contentEditable={false}
-						readOnly
-					// onInput={resizeTextArea}
-					// readOnly
-					// contentEditable
-					// onCut={noop}
-					// onCopy={noop}
-					// onPaste={noop}
-					// onKeyDown={noop}
-					>
+					<div className="text-lesson scroll-none" ref={scrollRef} >
 						<TypeAnimation
-							sequence={[
-								`${textLesson}`,
-								5000
-							]}
-							speed={200}
-							wrapper="span"
+							sequence={[textLesson, 5000]}
+							speed={50}
+							wrapper="div"
 							cursor={false}
-							style={{ fontSize: '18px', display: 'inline-block' }}
+							style={{ fontSize: '18px' }}
 						/>
 					</div>
+
 				)
 			}
 			<div className="link-lesson">
