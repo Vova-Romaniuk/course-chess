@@ -13,7 +13,7 @@ export const checkKingAroundAndEnemyFigures = (obj, board, prev) => {
 	let res = result.concat(stepDirect(obj, board, prev));
 
 	let posKing = [];
-	if (obj.name != '') {
+	if (obj.name !== '') {
 		board.forEach((row, indexRow) => {
 			row.forEach((column, indexColumn) => {
 				if (column.name === 'king' && column.color === obj.color) {
@@ -39,7 +39,7 @@ export const checkKingAroundAndEnemyFigures = (obj, board, prev) => {
 		if (
 			board[partArray[i][0]][partArray[i][1]].color !=
 				board[pos[0]][pos[1]].color &&
-			board[partArray[i][0]][partArray[i][1]].color != ''
+			board[partArray[i][0]][partArray[i][1]].color !== ''
 		) {
 			posFigure = board[partArray[i][0]][partArray[i][1]];
 			break;
@@ -139,7 +139,7 @@ const findEnemyFigureIsAvailable = (
 			if (
 				(board[res[row][col][0]][res[row][col][1]].color !=
 					board[pos[0]][pos[1]].color &&
-					board[res[row][col][0]][res[row][col][1]].color != '') ||
+					board[res[row][col][0]][res[row][col][1]].color !== '') ||
 				board[res[row][col][0]][res[row][col][1]].color ==
 					board[posFigureGaveShah[0]][posFigureGaveShah[1]].color
 			) {
@@ -196,7 +196,7 @@ const findEnemyPartArrayIsAvailable = (res, pos, board) => {
 			if (
 				board[res[row][col][0]][res[row][col][1]].color !=
 					board[pos[0]][pos[1]].color &&
-				board[res[row][col][0]][res[row][col][1]].color != ''
+				board[res[row][col][0]][res[row][col][1]].color !== ''
 			) {
 				partArray.push(res[row]);
 				break;
@@ -224,7 +224,7 @@ export const checkedShah = (obj, board, prev, kingPos) => {
 	let kingSteps = checkedKingStep(objKing, board, prev, false);
 	//console.log(kingSteps)
 	let resKingSteps = kingSteps;
-	if (unionSteps.length != 0) {
+	if (unionSteps.length !== 0) {
 		resKingSteps?.map((element) => {
 			unionSteps[0].forEach((el) => {
 				if (element[0] === el[0] && element[1] === el[1]) {
@@ -235,7 +235,7 @@ export const checkedShah = (obj, board, prev, kingPos) => {
 		});
 	}
 	// console.log(kingSteps)
-	unionSteps = unionSteps.length != 0 ? unionSteps[0].concat(kingSteps) : [];
+	unionSteps = unionSteps.length !== 0 ? unionSteps[0].concat(kingSteps) : [];
 	return unionSteps;
 };
 
@@ -256,16 +256,16 @@ export const intersection = (curentAvailable, availableStep) => {
 };
 const checkAllUnionFiguresOveplapsWhenShah = (overlaps, board, prev, king) => {
 	let result = [];
-	if (overlaps.length != 0) {
+	if (overlaps.length !== 0) {
 		board.forEach((row) => {
 			row.forEach((col) => {
 				if (
 					col.color == board[king[0]][king[1]].color &&
-					col.name != 'king'
+					col.name !== 'king'
 				) {
 					let currentFig = selectFigure(col, board, prev, false);
 					let res = intersection(overlaps, currentFig);
-					res.length != 0 && result.push(res);
+					res.length !== 0 && result.push(res);
 				}
 			});
 		});

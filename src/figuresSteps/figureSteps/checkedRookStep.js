@@ -1,4 +1,4 @@
-import { findPosition } from "../helpers";
+import { findPosition } from '../helpers';
 
 export function checkedRookStep(obj, board, prev, isBool) {
 	let pos = findPosition(obj, board, prev);
@@ -8,7 +8,7 @@ export function checkedRookStep(obj, board, prev, isBool) {
 
 	//top
 	for (let i = pos[0] - 1; i >= 0; i--) {
-		if(!isBool){
+		if (!isBool) {
 			if (board[pos[0]][pos[1]].color === board[i][jt].color) {
 				break;
 			}
@@ -16,14 +16,14 @@ export function checkedRookStep(obj, board, prev, isBool) {
 		res.push([i, jt]);
 		if (
 			board[pos[0]][pos[1]].color !== board[i][jt].color &&
-			board[i][jt].name != ''
+			board[i][jt].name !== ''
 		) {
 			break;
 		}
 	}
 	//bottom
 	for (let i = pos[0] + 1; i <= 7; i++) {
-		if(!isBool){
+		if (!isBool) {
 			if (board[pos[0]][pos[1]].color === board[i][jt].color) {
 				break;
 			}
@@ -31,37 +31,37 @@ export function checkedRookStep(obj, board, prev, isBool) {
 		res.push([i, jt]);
 		if (
 			board[pos[0]][pos[1]].color !== board[i][jt].color &&
-			board[i][jt].name != ''
+			board[i][jt].name !== ''
 		) {
 			break;
 		}
 	}
 	//right
 	for (let j = pos[1] + 1; j <= 7; j++) {
-		if(!isBool){
+		if (!isBool) {
 			if (board[pos[0]][pos[1]].color === board[it][j].color) {
 				break;
 			}
-		}	
+		}
 		res.push([it, j]);
 		if (
 			board[pos[0]][pos[1]].color !== board[it][j].color &&
-			board[it][j].name != ''
+			board[it][j].name !== ''
 		) {
 			break;
 		}
 	}
 	//left
 	for (let j = pos[1] - 1; j >= 0; j--) {
-		if(!isBool){
+		if (!isBool) {
 			if (board[pos[0]][pos[1]].color === board[it][j].color) {
 				break;
 			}
-		}	
+		}
 		res.push([it, j]);
 		if (
 			board[pos[0]][pos[1]].color !== board[it][j].color &&
-			board[it][j].name != ''
+			board[it][j].name !== ''
 		) {
 			break;
 		}

@@ -70,7 +70,7 @@ function FullBoard() {
 	}, [board]);
 
 	const rocker = (arrRockerSteps = []) => {
-		if (arrRockerSteps.length != 0) {
+		if (arrRockerSteps.length !== 0) {
 			//king
 			board[arrRockerSteps[0]][arrRockerSteps[1]].name =
 				board[posUnionKing[0]][posUnionKing[1]].name;
@@ -105,7 +105,7 @@ function FullBoard() {
 	const checkMat = () => {
 		let check = intersection(unionOverlaps, kingCantStep);
 		if (
-			unionOverlaps.length != 0 &&
+			unionOverlaps.length !== 0 &&
 			checkAllUnionOverplaps.length == 0 &&
 			check.length !== 0
 		) {
@@ -149,7 +149,7 @@ function FullBoard() {
 			setPrev(findPosition(obj, board, prev));
 			setLimitStep(selectFigure(obj, board, prev, false, unionOverlaps));
 		}
-		if (prev.length != 0) {
+		if (prev.length !== 0) {
 			setNext(findPosition(obj, board, prev, posKing));
 			setActive(true);
 		}
@@ -160,7 +160,7 @@ function FullBoard() {
 				JSON.stringify(prev) === JSON.stringify(next) ||
 				board[prev[0]][prev[1]].color ===
 					board[next[0]][next[1]].color ||
-				board[prev[0]][prev[1]].color != board[next[0]][next[1]].color
+				board[prev[0]][prev[1]].color !== board[next[0]][next[1]].color
 			) {
 				setPrev(next);
 				setLimitStep(
@@ -169,7 +169,7 @@ function FullBoard() {
 				setNext([]);
 				setActive(false);
 			}
-			if (JSON.stringify(prev) != JSON.stringify(next)) {
+			if (JSON.stringify(prev) !== JSON.stringify(next)) {
 				limitStep?.forEach((element) => {
 					if (
 						element[0] === next[0] &&
@@ -277,7 +277,7 @@ function FullBoard() {
 			if (
 				el[0] === indexRow &&
 				el[1] === indexColumn &&
-				board[indexRow][indexColumn] != ''
+				board[indexRow][indexColumn] !== ''
 			) {
 				bool = false;
 			}
@@ -293,7 +293,7 @@ function FullBoard() {
 			}
 		});
 
-		if (checkKingAround.length != 0) {
+		if (checkKingAround.length !== 0) {
 			if (obj.name === '') {
 				bool = true;
 			}
@@ -301,7 +301,7 @@ function FullBoard() {
 				if (
 					el[0] === indexRow &&
 					el[1] === indexColumn &&
-					board[indexRow][indexColumn] != ''
+					board[indexRow][indexColumn] !== ''
 				) {
 					bool = true;
 				}
@@ -318,7 +318,7 @@ function FullBoard() {
 			}
 		}
 
-		if (unionOverlaps.length != 0) {
+		if (unionOverlaps.length !== 0) {
 			if (obj.name === '') {
 				bool = true;
 			}
@@ -327,7 +327,7 @@ function FullBoard() {
 					if (
 						el[0] === indexRow &&
 						el[1] === indexColumn &&
-						board[indexRow][indexColumn] != ''
+						board[indexRow][indexColumn] !== ''
 					) {
 						bool = false;
 					}
@@ -337,7 +337,7 @@ function FullBoard() {
 					if (
 						el[0] === indexRow &&
 						el[1] === indexColumn &&
-						board[indexRow][indexColumn] != ''
+						board[indexRow][indexColumn] !== ''
 					) {
 						bool = true;
 					}
@@ -395,12 +395,12 @@ function FullBoard() {
 	};
 
 	return (
-		<div className='board'>
+		<div className="board">
 			{visibilityModal && <PopupResult />}
 			{board?.map((rows, indexRow) => (
-				<div className='rows' key={indexRow}>
+				<div className="rows" key={indexRow}>
 					{rows?.map((column, indexColumn) => (
-						<div className='column' key={indexColumn}>
+						<div className="column" key={indexColumn}>
 							<button
 								className={boxColor(
 									column,
@@ -453,14 +453,14 @@ function FullBoard() {
 								)}
 
 								{indexColumn === 0 ? (
-									<span className='numbers'>
+									<span className="numbers">
 										{numbers[indexRow]}
 									</span>
 								) : (
 									<span></span>
 								)}
 								{indexRow === 7 ? (
-									<span className='letters'>
+									<span className="letters">
 										{letters[indexColumn]}
 									</span>
 								) : (

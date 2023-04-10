@@ -1,4 +1,4 @@
-import { findPosition } from "../helpers";
+import { findPosition } from '../helpers';
 export function checkedPawnStep(obj, board, prev) {
 	switch (obj.color) {
 		case 'white':
@@ -31,7 +31,7 @@ function checkedPawnStepWhite(obj, board, prev) {
 					board[element[0]][element[1]].color ||
 					board[pos[0]][pos[1]].color !==
 						board[element[0]][element[1]].color) &&
-				board[element[0]][element[1]].name != ''
+				board[element[0]][element[1]].name !== ''
 			) {
 				let index = res.indexOf(element);
 				res.splice(index, 1);
@@ -41,14 +41,16 @@ function checkedPawnStepWhite(obj, board, prev) {
 			}
 		});
 		if (
-			board[pos[0] - 1][pos[1] + 1]?.name != '' &&
-			board[pos[0]][pos[1]]?.color != board[pos[0] - 1][pos[1] + 1]?.color
+			board[pos[0] - 1][pos[1] + 1]?.name !== '' &&
+			board[pos[0]][pos[1]]?.color !==
+				board[pos[0] - 1][pos[1] + 1]?.color
 		) {
 			res.push([pos[0] - 1, pos[1] + 1]);
 		}
 		if (
-			board[pos[0] - 1][pos[1] - 1]?.name != '' &&
-			board[pos[0]][pos[1]]?.color != board[pos[0] - 1][pos[1] - 1]?.color
+			board[pos[0] - 1][pos[1] - 1]?.name !== '' &&
+			board[pos[0]][pos[1]]?.color !==
+				board[pos[0] - 1][pos[1] - 1]?.color
 		) {
 			res.push([pos[0] - 1, pos[1] - 1]);
 		}
@@ -75,7 +77,7 @@ function checkedPawnStepBlack(obj, board, prev) {
 					board[element[0]][element[1]].color ||
 					board[pos[0]][pos[1]].color !==
 						board[element[0]][element[1]].color) &&
-				board[element[0]][element[1]].name != ''
+				board[element[0]][element[1]].name !== ''
 			) {
 				let index = res.indexOf(element);
 				res.splice(index, 1);
@@ -85,14 +87,16 @@ function checkedPawnStepBlack(obj, board, prev) {
 			}
 		});
 		if (
-			board[pos[0] + 1][pos[1] + 1]?.name != '' &&
-			board[pos[0]][pos[1]]?.color != board[pos[0] + 1][pos[1] + 1]?.color
+			board[pos[0] + 1][pos[1] + 1]?.name !== '' &&
+			board[pos[0]][pos[1]]?.color !==
+				board[pos[0] + 1][pos[1] + 1]?.color
 		) {
 			res.push([pos[0] + 1, pos[1] + 1]);
 		}
 		if (
-			board[pos[0] + 1][pos[1] - 1]?.name != '' &&
-			board[pos[0]][pos[1]]?.color != board[pos[0] + 1][pos[1] - 1]?.color
+			board[pos[0] + 1][pos[1] - 1]?.name !== '' &&
+			board[pos[0]][pos[1]]?.color !==
+				board[pos[0] + 1][pos[1] - 1]?.color
 		) {
 			res.push([pos[0] + 1, pos[1] - 1]);
 		}

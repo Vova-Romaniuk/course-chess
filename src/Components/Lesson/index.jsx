@@ -33,7 +33,7 @@ export function Lesson({ }) {
 	}, [figure])
 
 	useEffect(() => {
-		if (figure != "game-goal") {
+		if (figure !=="game-goal") {
 			board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].name = lessonFig.name;
 			board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].icon = lessonFig.icon;
 			board[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].color = 'white';
@@ -46,7 +46,7 @@ export function Lesson({ }) {
 	}, [lessonFig]);
 
 	useEffect(() => {
-		if (figure != "game-goal") {
+		if (figure !=="game-goal") {
 			if (iter > 0) {
 				setCheckKingCantStep(checkKingsNotMeets(board, lessonFig.lesson[iter - 1].currentFig.position))
 			}
@@ -85,7 +85,7 @@ export function Lesson({ }) {
 				return boardCopy;
 			});
 		}
-		if (i === 0 && otherFigLength != 0) {
+		if (i === 0 && otherFigLength !==0) {
 			setBoard((prevBoard) => {
 				const boardCopy = prevBoard.map((row) => row.slice());
 
@@ -222,7 +222,7 @@ export function Lesson({ }) {
 				} else {
 					setIntervalId(id);
 
-					if (figure != "game-goal") {
+					if (figure !=="game-goal") {
 						handleStep(iter);
 					}
 					if (figure === "game-goal") stepGameGoal(iter);

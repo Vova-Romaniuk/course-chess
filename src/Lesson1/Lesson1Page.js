@@ -29,7 +29,9 @@ function Lesson1Page() {
 		}
 	};
 	const bit = (obj) => {
-		return obj.prevColor != obj.nextColor && obj.nextColor != '' ? 'x' : '';
+		return obj.prevColor !== obj.nextColor && obj.nextColor !== ''
+			? 'x'
+			: '';
 	};
 	const checkBitPawn = (obj) => {};
 	return (

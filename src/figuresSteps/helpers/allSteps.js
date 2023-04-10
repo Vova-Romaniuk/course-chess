@@ -1,4 +1,4 @@
-import { findPosition, findPositionForShah } from ".";
+import { findPosition, findPositionForShah } from '.';
 
 export const stepDiagonal = (obj, board, prev, isBool) => {
 	let pos = isBool
@@ -23,7 +23,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -31,7 +31,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 				} else {
 					if (
 						obj.color === board[i][j].color &&
-						board[i][j].name != 'king'
+						board[i][j].name !== 'king'
 					) {
 						bool = true;
 						break;
@@ -40,7 +40,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -71,7 +71,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -79,7 +79,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 				} else {
 					if (
 						obj.color === board[i][j].color &&
-						board[i][j].name != 'king'
+						board[i][j].name !== 'king'
 					) {
 						bool = true;
 						break;
@@ -88,7 +88,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -120,7 +120,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -128,7 +128,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 				} else {
 					if (
 						obj.color === board[i][j].color &&
-						board[i][j].name != 'king'
+						board[i][j].name !== 'king'
 					) {
 						bool = true;
 						break;
@@ -137,7 +137,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -169,7 +169,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -177,7 +177,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 				} else {
 					if (
 						obj.color === board[i][j].color &&
-						board[i][j].name != 'king'
+						board[i][j].name !== 'king'
 					) {
 						bool = true;
 						break;
@@ -186,7 +186,7 @@ export const stepDiagonal = (obj, board, prev, isBool) => {
 
 					if (
 						obj.color !== board[i][j].color &&
-						board[i][j].name != ''
+						board[i][j].name !== ''
 					) {
 						bool = true;
 						break;
@@ -224,19 +224,19 @@ export const stepDirect = (obj, board, prev, isBool) => {
 			}
 			res.push([i, jt]);
 
-			if (obj.color !== board[i][jt].color && board[i][jt].name != '') {
+			if (obj.color !== board[i][jt].color && board[i][jt].name !== '') {
 				break;
 			}
 		} else {
 			if (
 				obj.color === board[i][jt].color &&
-				board[i][jt].name != 'king'
+				board[i][jt].name !== 'king'
 			) {
 				break;
 			}
 			res.push([i, jt]);
 
-			if (obj.color !== board[i][jt].color && board[i][jt].name != '') {
+			if (obj.color !== board[i][jt].color && board[i][jt].name !== '') {
 				break;
 			}
 		}
@@ -250,19 +250,19 @@ export const stepDirect = (obj, board, prev, isBool) => {
 			}
 			res.push([i, jt]);
 
-			if (obj.color !== board[i][jt].color && board[i][jt].name != '') {
+			if (obj.color !== board[i][jt].color && board[i][jt].name !== '') {
 				break;
 			}
 		} else {
 			if (
 				obj.color === board[i][jt].color &&
-				board[i][jt].name != 'king'
+				board[i][jt].name !== 'king'
 			) {
 				break;
 			}
 			res.push([i, jt]);
 
-			if (obj.color !== board[i][jt].color && board[i][jt].name != '') {
+			if (obj.color !== board[i][jt].color && board[i][jt].name !== '') {
 				break;
 			}
 		}
@@ -276,18 +276,18 @@ export const stepDirect = (obj, board, prev, isBool) => {
 				break;
 			}
 			res.push([it, j]);
-			if (obj.color !== board[it][j].color && board[it][j].name != '') {
+			if (obj.color !== board[it][j].color && board[it][j].name !== '') {
 				break;
 			}
 		} else {
 			if (
 				obj.color === board[it][j].color &&
-				board[it][j].name != 'king'
+				board[it][j].name !== 'king'
 			) {
 				break;
 			}
 			res.push([it, j]);
-			if (obj.color !== board[it][j].color && board[it][j].name != '') {
+			if (obj.color !== board[it][j].color && board[it][j].name !== '') {
 				break;
 			}
 		}
@@ -300,18 +300,18 @@ export const stepDirect = (obj, board, prev, isBool) => {
 				break;
 			}
 			res.push([it, j]);
-			if (obj.color !== board[it][j].color && board[it][j].name != '') {
+			if (obj.color !== board[it][j].color && board[it][j].name !== '') {
 				break;
 			}
 		} else {
 			if (
 				obj.color === board[it][j].color &&
-				board[it][j].name != 'king'
+				board[it][j].name !== 'king'
 			) {
 				break;
 			}
 			res.push([it, j]);
-			if (obj.color !== board[it][j].color && board[it][j].name != '') {
+			if (obj.color !== board[it][j].color && board[it][j].name !== '') {
 				break;
 			}
 		}

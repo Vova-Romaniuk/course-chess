@@ -1,4 +1,4 @@
-import { findPosition } from "../helpers";
+import { findPosition } from '../helpers';
 
 export function checkedBishopStep(obj, board, prev, isBool) {
 	let pos = findPosition(obj, board, prev);
@@ -13,16 +13,16 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] - 1; i >= n; i--) {
 		for (let j = pos[1] + 1; j <= 7; j++) {
 			if (j == ex) {
-				if(!isBool){
+				if (!isBool) {
 					if (board[pos[0]][pos[1]].color === board[i][j].color) {
 						bool = true;
 						break;
 					}
-				}	
+				}
 				res.push([i, j]);
 				if (
 					board[pos[0]][pos[1]].color !== board[i][j].color &&
-					board[i][j].name != ''
+					board[i][j].name !== ''
 				) {
 					bool = true;
 					break;
@@ -42,17 +42,17 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] - 1; i >= n; i--) {
 		for (let j = pos[1] - 1; j >= 0; j--) {
 			if (j == ex) {
-				if(!isBool){
+				if (!isBool) {
 					if (board[pos[0]][pos[1]].color === board[i][j].color) {
 						bool = true;
 						break;
 					}
-				}	
+				}
 				res.push([i, j]);
 
 				if (
 					board[pos[0]][pos[1]].color !== board[i][j].color &&
-					board[i][j].name != ''
+					board[i][j].name !== ''
 				) {
 					bool = true;
 					break;
@@ -73,18 +73,18 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] + 1; i <= n; i++) {
 		for (let j = pos[1] - 1; j >= 0; j--) {
 			if (j == ex) {
-				if(!isBool){
+				if (!isBool) {
 					if (board[pos[0]][pos[1]].color === board[i][j].color) {
 						bool = true;
 						break;
 					}
 				}
-				
+
 				res.push([i, j]);
 
 				if (
 					board[pos[0]][pos[1]].color !== board[i][j].color &&
-					board[i][j].name != ''
+					board[i][j].name !== ''
 				) {
 					bool = true;
 					break;
@@ -104,17 +104,17 @@ export function checkedBishopStep(obj, board, prev, isBool) {
 	for (let i = pos[0] + 1; i <= n; i++) {
 		for (let j = pos[1] + 1; j <= 7; j++) {
 			if (j == ex) {
-				if(!isBool){
+				if (!isBool) {
 					if (board[pos[0]][pos[1]].color === board[i][j].color) {
 						bool = true;
 						break;
 					}
-				}	
+				}
 				res.push([i, j]);
 
 				if (
 					board[pos[0]][pos[1]].color !== board[i][j].color &&
-					board[i][j].name != ''
+					board[i][j].name !== ''
 				) {
 					bool = true;
 					break;

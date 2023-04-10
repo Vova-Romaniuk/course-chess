@@ -1,4 +1,4 @@
-import { findPositionForShah } from "../helpers";
+import { findPositionForShah } from '../helpers';
 
 export function checkedPawnStepForShah(obj, board, prev) {
 	switch (obj.color) {
@@ -41,12 +41,14 @@ export function checkedPawnStepWhiteForShah(obj, board, prev) {
 			}
 		});
 		if (
-			board[pos[0]][pos[1]]?.color != board[pos[0] - 1][pos[1] + 1]?.color
+			board[pos[0]][pos[1]]?.color !==
+			board[pos[0] - 1][pos[1] + 1]?.color
 		) {
 			res.push([pos[0] - 1, pos[1] + 1]);
 		}
 		if (
-			board[pos[0]][pos[1]]?.color != board[pos[0] - 1][pos[1] - 1]?.color
+			board[pos[0]][pos[1]]?.color !==
+			board[pos[0] - 1][pos[1] - 1]?.color
 		) {
 			res.push([pos[0] - 1, pos[1] - 1]);
 		}
@@ -73,7 +75,7 @@ export function checkedPawnStepBlackForShah(obj, board, prev) {
 					board[element[0]][element[1]].color ||
 					board[pos[0]][pos[1]].color !==
 						board[element[0]][element[1]].color) &&
-				board[element[0]][element[1]].name != ''
+				board[element[0]][element[1]].name !== ''
 			) {
 				let index = res.indexOf(element);
 				res.splice(index, 1);
@@ -83,14 +85,16 @@ export function checkedPawnStepBlackForShah(obj, board, prev) {
 			}
 		});
 		if (
-			board[pos[0] + 1][pos[1] + 1]?.name != '' &&
-			board[pos[0]][pos[1]]?.color != board[pos[0] + 1][pos[1] + 1]?.color
+			board[pos[0] + 1][pos[1] + 1]?.name !== '' &&
+			board[pos[0]][pos[1]]?.color !==
+				board[pos[0] + 1][pos[1] + 1]?.color
 		) {
 			res.push([pos[0] + 1, pos[1] + 1]);
 		}
 		if (
-			board[pos[0] + 1][pos[1] - 1]?.name != '' &&
-			board[pos[0]][pos[1]]?.color != board[pos[0] + 1][pos[1] - 1]?.color
+			board[pos[0] + 1][pos[1] - 1]?.name !== '' &&
+			board[pos[0]][pos[1]]?.color !==
+				board[pos[0] + 1][pos[1] - 1]?.color
 		) {
 			res.push([pos[0] + 1, pos[1] - 1]);
 		}
