@@ -4,6 +4,7 @@ import knight from './knight-lesson.mp3';
 import bishop from './bishop-lesson.mp3';
 import rook from './rook-lesson.mp3';
 import pawn from './pawn-lesson.mp3';
+import gamegoal from './game-goal.mp3';
 
 export default {
 	queen,
@@ -12,4 +13,5 @@ export default {
 	bishop,
 	rook,
 	pawn,
+	gamegoal,
 };

@@ -54,11 +54,8 @@ function FullBoard() {
 		setLimitStep(selectFigure(checkObj, board, prev, false, unionOverlaps));
 	}, [next]);
 	useEffect(() => {
-		console.log(unionOverlaps);
-	}, [unionOverlaps]);
-	useEffect(() => {
-		console.log(checkKingAround);
-	}, [checkKingAround]);
+		console.log(kingCantStep);
+	}, [kingCantStep]);
 	useEffect(() => {
 		setTurn(!turn);
 		findPosKing();
@@ -74,10 +71,13 @@ function FullBoard() {
 			//king
 			board[arrRockerSteps[0]][arrRockerSteps[1]].name =
 				board[posUnionKing[0]][posUnionKing[1]].name;
+
 			board[arrRockerSteps[0]][arrRockerSteps[1]].icon =
 				board[posUnionKing[0]][posUnionKing[1]].icon;
+
 			board[arrRockerSteps[0]][arrRockerSteps[1]].color =
 				board[posUnionKing[0]][posUnionKing[1]].color;
+
 			board[arrRockerSteps[0]][arrRockerSteps[1]].checked = true;
 
 			board[posUnionKing[0]][posUnionKing[1]].name = '';
@@ -86,32 +86,39 @@ function FullBoard() {
 			//rook
 			board[arrRockerSteps[2]][arrRockerSteps[3]].name =
 				board[arrRockerSteps[4]][arrRockerSteps[5]].name;
+
 			board[arrRockerSteps[2]][arrRockerSteps[3]].icon =
 				board[arrRockerSteps[4]][arrRockerSteps[5]].icon;
+
 			board[arrRockerSteps[2]][arrRockerSteps[3]].color =
 				board[arrRockerSteps[4]][arrRockerSteps[5]].color;
+
 			board[arrRockerSteps[2]][arrRockerSteps[3]].checked = true;
 
 			board[arrRockerSteps[4]][arrRockerSteps[5]].name = '';
 			board[arrRockerSteps[4]][arrRockerSteps[5]].icon = '';
 			board[arrRockerSteps[4]][arrRockerSteps[5]].color = '';
-
+			dispatch(
+				changeHistoryAction({
+					prev: board[arrRockerSteps[0]][arrRockerSteps[1]].id,
+					next: board[arrRockerSteps[2]][arrRockerSteps[3]].id,
+					prevName: board[arrRockerSteps[0]][arrRockerSteps[1]].name,
+					nextName: board[arrRockerSteps[2]][arrRockerSteps[3]].name,
+					prevColor:
+						board[arrRockerSteps[0]][arrRockerSteps[1]].color,
+					nextColor:
+						board[arrRockerSteps[2]][arrRockerSteps[3]].color,
+				})
+			);
+			setCounter(counter + 1);
+			if (!turn) dispatch(arrayCounter());
 			setBoard([...board]);
 			setActive(false);
 			play();
 			setLimit([]);
 		}
 	};
-	const checkMat = () => {
-		let check = intersection(unionOverlaps, kingCantStep);
-		if (
-			unionOverlaps.length !== 0 &&
-			checkAllUnionOverplaps.length == 0 &&
-			check.length !== 0
-		) {
-			dispatch(changeVisibility());
-		}
-	};
+	const checkMat = () => {};
 	const findPosUnionKing = () => {
 		board.forEach((row, indexRow) => {
 			row.forEach((column, indexColumn) => {
@@ -184,7 +191,8 @@ function FullBoard() {
 							changeHistoryAction({
 								prev: board[prev[0]][prev[1]].id,
 								next: board[next[0]][next[1]].id,
-								name: board[prev[0]][prev[1]].name,
+								prevName: board[prev[0]][prev[1]].name,
+								nextName: board[next[0]][next[1]].name,
 								prevColor: board[prev[0]][prev[1]].color,
 								nextColor: board[next[0]][next[1]].color,
 							})
@@ -367,10 +375,6 @@ function FullBoard() {
 				bool = true;
 			}
 		}
-
-		// if( posFigureGaveShah[0] == indexRow && posFigureGaveShah[1] == indexColumn){
-		// 	bool = true
-		// }
 
 		return bool;
 	};

@@ -1,0 +1,41 @@
+.notification{
+	margin-top: 15px;
+	width: 100%;
+	height: 100px;
+	display: flex;
+	flex-direction: column;
+	background: rgb(86, 104, 111,0.4);
+	box-shadow: 0 5px 30px rgb(0 0 0 / 0.3);
+	border-radius: 20px;
+	.title{
+		padding: 0 10px;
+		padding-left: 20px;
+		width: 90%;
+		margin: 0 auto !important ;
+		margin-top: 10px !important;
+		font-size: 16px !important;
+		font-weight: 600;
+		span{
+			margin-left: 10px;
+			margin-right: auto;
+			width: 100%;
+			word-break: keep-all;
+		}
+	}
+	.error{
+		color:rgb(252, 114, 114);
+	}
+	.success{
+		color:rgb(14, 219, 14)
+	}
+	.hint{
+		color:rgb(143, 143, 233);
+	}
+	.text{
+		padding: 0 10px;
+		padding-left: 20px;
+		width: 90%;
+		margin: 0 auto;
+		margin-top: 10px;
+	}
+}

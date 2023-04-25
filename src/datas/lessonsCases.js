@@ -21,7 +21,7 @@ export const figureLessons = (name) => {
 			return QUEEN_LESSON;
 		case 'pawn':
 			return PAWN_LESSON;
-		case 'game-goal':
+		case 'gamegoal':
 			return GAME_GOAL;
 		default:
 			return {};

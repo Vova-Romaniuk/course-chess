@@ -1,16 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
 import { TypeAnimation } from 'react-type-animation';
 import ScrollableFeed from 'react-scrollable-feed';
+import { Link } from "react-router-dom";
 import "./style.scss"
 
-export default function SidebarRight({ title, description, icon, textLesson, isType }) {
+export default function SidebarRight({ title, description, icon, textLesson, isType, pathName }) {
 	const textRef = useRef(null)
 	const scrollRef = useRef(null);
 
 	useEffect(() => {
 		const divElement = scrollRef.current;
-
 		if (divElement) {
+
 			divElement.scrollTop = divElement.scrollHeight;
 		}
 
@@ -34,19 +35,21 @@ export default function SidebarRight({ title, description, icon, textLesson, isT
 					<div className="text-lesson scroll-none" ref={scrollRef} >
 						<TypeAnimation
 							sequence={[textLesson, 5000]}
-							speed={50}
+							speed={200}
 							wrapper="div"
 							cursor={false}
 							style={{ fontSize: '18px' }}
 						/>
 					</div>
-
 				)
 			}
 			<div className="link-lesson">
-				<button>
-					Перейти до завдань
-				</button>
+				<Link
+					to={pathName === "gamegoal" ? "/" : `/task/${pathName}`}>
+					<button>
+						Перейти до завдань
+					</button>
+				</Link>
 			</div>
 		</div>
 	);

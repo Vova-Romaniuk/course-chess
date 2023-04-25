@@ -32,12 +32,12 @@ function BoardLesson({
 					? notIntersection(limit, checkKingCantStep)
 					: limit;
 			possibleStep?.forEach((element) => {
-				if (element[0] == indexRow && element[1] == indexColumn) {
+				if (element[0] === indexRow && element[1] === indexColumn) {
 					result = 'box possible-step';
 				}
 			});
 			lightArr?.forEach((el) => {
-				if (el[0] == indexRow && el[1] == indexColumn) {
+				if (el[0] === indexRow && el[1] === indexColumn) {
 					result = 'box light';
 				}
 			});
@@ -50,11 +50,11 @@ function BoardLesson({
 		setStart(true);
 	};
 	return (
-		<div className='board'>
+		<div className="board">
 			{board?.map((rows, indexRow) => (
-				<div className='rows' key={indexRow}>
+				<div className="rows" key={indexRow}>
 					{rows?.map((column, indexColumn) => (
-						<div className='column' key={indexColumn}>
+						<div className="column" key={indexColumn}>
 							<button className={boxColor(indexRow, indexColumn)}>
 								{column.icon === '' ? (
 									<></>
@@ -62,14 +62,14 @@ function BoardLesson({
 									<img src={column.icon} />
 								)}
 								{indexColumn === 0 ? (
-									<span className='numbers'>
+									<span className="numbers">
 										{NUMBERS[indexRow]}
 									</span>
 								) : (
 									<span></span>
 								)}
 								{indexRow === 7 ? (
-									<span className='letters'>
+									<span className="letters">
 										{LETTERS[indexColumn]}
 									</span>
 								) : (
@@ -81,9 +81,9 @@ function BoardLesson({
 				</div>
 			))}
 			{!start && (
-				<div className='play' onClick={handleClick}>
-					<div className='circle'>
-						<i className='fa-solid fa-play'></i>
+				<div className="play" onClick={handleClick}>
+					<div className="circle">
+						<i className="fa-solid fa-play"></i>
 					</div>
 				</div>
 			)}
