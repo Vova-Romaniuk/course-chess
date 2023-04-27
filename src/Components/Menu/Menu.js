@@ -9,10 +9,8 @@ function Menu() {
 
 	useEffect(() => {
 		const path = window.location.href;
-		console.log(path);
 		if (path.includes('lesson') || path.includes('task')) {
 			setActive('lesson');
-			console.log('work');
 		} else setActive('train-board');
 	}, []);
 
@@ -58,16 +56,16 @@ function Menu() {
 							</Link>
 						))}
 						<Link
-							to={`/lesson/gamegoal`}
+							to={`/lesson/locationfigure`}
 							onClick={() => {
 								setActive('lesson');
 								setSubmenuActive('gamegoal');
 							}}>
-							<li onClick>Гра та мета</li>
+							<li>Розташування фігур</li>
 						</Link>
 					</ul>
 				</li>
-				<Link to="/">
+				<a href="/">
 					<li
 						className={active === 'train-board' && 'active'}
 						onClick={() => {
@@ -76,7 +74,7 @@ function Menu() {
 						<i className="fa-solid fa-dumbbell"></i>Дошка для
 						тренувань
 					</li>
-				</Link>
+				</a>
 			</ul>
 		</div>
 	);

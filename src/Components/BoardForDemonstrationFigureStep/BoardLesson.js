@@ -11,7 +11,9 @@ function BoardLesson({
 	lightArr,
 }) {
 	const [start, setStart] = useState(false);
-
+	useEffect(() => {
+		console.log(lightArr);
+	}, [lightArr]);
 	const notIntersection = (curentAvailable, availableStep) => {
 		let res = [];
 		curentAvailable?.forEach((el1) => {

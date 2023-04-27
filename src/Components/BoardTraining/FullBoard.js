@@ -53,9 +53,7 @@ function FullBoard() {
 		replace();
 		setLimitStep(selectFigure(checkObj, board, prev, false, unionOverlaps));
 	}, [next]);
-	useEffect(() => {
-		console.log(kingCantStep);
-	}, [kingCantStep]);
+
 	useEffect(() => {
 		setTurn(!turn);
 		findPosKing();

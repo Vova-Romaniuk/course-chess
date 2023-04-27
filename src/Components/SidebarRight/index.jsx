@@ -16,7 +16,9 @@ export default function SidebarRight({ title, description, icon, textLesson, isT
 		}
 
 	}, [scrollRef.current?.scrollHeight]);
-
+	useEffect(() => {
+		console.log(pathName)
+	}, [pathName])
 	return (
 		<div className="right-sidebar ">
 			<div className="title">
@@ -44,12 +46,21 @@ export default function SidebarRight({ title, description, icon, textLesson, isT
 				)
 			}
 			<div className="link-lesson">
-				<Link
-					to={pathName === "gamegoal" ? "/" : `/task/${pathName}`}>
-					<button>
-						Перейти до завдань
-					</button>
-				</Link>
+				{
+					pathName === "locationfigure"
+						? <a href="/">
+							<button>
+								Перейти до завдань
+							</button>
+						</a>
+						: <Link
+							to={`/task/${pathName}`}>
+							<button>
+								Перейти до завдань
+							</button>
+						</Link>
+				}
+
 			</div>
 		</div>
 	);

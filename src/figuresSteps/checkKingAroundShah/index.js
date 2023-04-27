@@ -216,13 +216,14 @@ export const checkedShah = (obj, board, prev, kingPos) => {
 	let objKing = board[kingPos[0]][kingPos[1]];
 
 	let pos = findPosition(objKing, board, prev);
+	console.log(board[pos[0]][pos[1]]);
 	let result = stepDiagonal(objKing, board, prev, true);
 	let res = result.concat(stepDirect(objKing, board, prev, true));
 	res = res.concat(checkedKnightStepForShah(obj, board, prev, true));
 
 	let unionSteps = unionAvailable(res, pos, board, prev);
 	let kingSteps = checkedKingStep(objKing, board, prev, false);
-	//console.log(kingSteps)
+
 	let resKingSteps = kingSteps;
 	if (unionSteps.length !== 0) {
 		resKingSteps?.map((element) => {
@@ -234,7 +235,7 @@ export const checkedShah = (obj, board, prev, kingPos) => {
 			});
 		});
 	}
-	// console.log(kingSteps)
+
 	unionSteps = unionSteps.length !== 0 ? unionSteps[0].concat(kingSteps) : [];
 	return unionSteps;
 };
@@ -254,6 +255,7 @@ export const intersection = (curentAvailable, availableStep) => {
 
 	return res;
 };
+
 const checkAllUnionFiguresOveplapsWhenShah = (overlaps, board, prev, king) => {
 	let result = [];
 	if (overlaps.length !== 0) {

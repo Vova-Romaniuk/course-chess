@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import "./style.scss"
-import useSound from "use-sound"
 import BoardLesson from "../BoardForDemonstrationFigureStep/BoardLesson"
 import defaultData from "../../datas/defaultData"
 import { clearDefaultData } from "../../datas/defaultData"
@@ -9,12 +8,12 @@ import { figureLessons } from "../../datas/lessonsCases"
 import { selectFigure } from "../../figuresSteps/selectFigure"
 import SidebarRight from "../SidebarRight"
 import { useParams } from "react-router"
-import sounds from "../../assets/sounds/index"
+
 import { ClipLoader } from "react-spinners";
 
 export function Lesson({ }) {
 	const { figure } = useParams()
-	const [board, setBoard] = useState(defaultData);
+	const [board, setBoard] = useState([]);
 	const [lessonFig, setLessonFig] = useState(null);
 	const [iter, setIter] = useState(0);
 	const [iterLight, setIterLight] = useState(0);
@@ -25,36 +24,40 @@ export function Lesson({ }) {
 	const [startLoop, setStartLoop] = useState(false)
 	const [start, setStart] = useState(false);
 	const [limit, setLimit] = useState([]);
-	const [play, { stop }] = useSound(sounds[figure]);
 	const [load, setLoad] = useState(true)
 
 	useEffect(() => {
-		stop()
+
 		clearDefaultData()
+		clearTimeout(intervalId)
 		const lessonFig = figureLessons(figure);
-		setBoard([])
 		const data = defaultData;
 		setLessonFig(lessonFig)
 		setLoad(true)
 		setIter(0);
+		setIterLight(0)
+		setLimit([])
 		setStart(false)
-		if (figure !== "gamegoal") {
+		if (figure !== "locationfigure") {
 			data[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].name = lessonFig.name;
 			data[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].icon = lessonFig.icon;
 			data[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]].color = 'white';
 			setBoard([...data]);
 			setLimit(selectFigure(data[lessonFig.firstPosition[0]][lessonFig.firstPosition[1]], data, lessonFig.firstPosition));
 		} else {
+			setLight(lessonFig.fieldLighted[iter])
 			setBoard([...data]);
 		}
 		setTimeout(() => {
 			setLoad(false)
 		}, 500)
-		return () => clearTimeout(intervalId)
-	}, [figure])
 
+	}, [figure])
 	useEffect(() => {
-		if (figure !== "gamegoal") {
+		console.log(light)
+	}, [light])
+	useEffect(() => {
+		if (figure !== "locationfigure") {
 			if (iter > 0) {
 				setCheckKingCantStep(checkKingsNotMeets(board, lessonFig.lesson[iter - 1].currentFig.position))
 			}
@@ -167,46 +170,30 @@ export function Lesson({ }) {
 	}
 
 	const stepGameGoal = (i) => {
-		if (i >= 6) {
-			setBoard((prevBoard) => {
-				let boardCopy = defaultData.map((row) => row.slice());
-
-				lessonFig.lesson[i].map((item) => {
-					boardCopy[item.position[0]][item.position[1]] = {
-						...boardCopy[item.position[0]][item.position[1]],
-						name: item.name,
-						icon: item.icon,
-						color: item.color,
-					};
-				})
-				return boardCopy;
+		setBoard((prevBoard) => {
+			const boardCopy = prevBoard.map((row) => row.slice());
+			lessonFig.lesson[i].map((item) => {
+				boardCopy[item.position[0]][item.position[1]] = {
+					...boardCopy[item.position[0]][item.position[1]],
+					name: item.name,
+					icon: item.icon,
+					color: item.color,
+				};
 			})
-		} else {
-			setBoard((prevBoard) => {
-				const boardCopy = prevBoard.map((row) => row.slice());
-				lessonFig.lesson[i].map((item) => {
-					boardCopy[item.position[0]][item.position[1]] = {
-						...boardCopy[item.position[0]][item.position[1]],
-						name: item.name,
-						icon: item.icon,
-						color: item.color,
-					};
-				})
-				return boardCopy;
-			})
-		}
-
+			return boardCopy;
+		})
 	}
 
 	const handleClick = () => {
 		loop();
-		if (figure.name === "gamegoal") {
+		if (figure.name === "locationfigure") {
 			loopLight()
 		}
-		play()
+
 	}
 
 	function loopLight() {
+		console.log("light")
 		const id = setTimeout(() => {
 			setIterLight(iterLight => {
 				if (iterLight === lessonFig.times.length) {
@@ -224,23 +211,35 @@ export function Lesson({ }) {
 	}
 
 	function loop() {
+		if (iter === 0) {
+			console.log("work")
+			setTimeout(() => {
+				setLight(lessonFig?.fieldLighted[0])
+			}, [5000])
+
+		}
 		const id = setTimeout(() => {
-			setIter(iter => {
-				if (iter === lessonFig.times.length) {
-					clearTimeout(intervalId)
-					setIntervalId(null)
-					return iter;
-				} else {
-					setIntervalId(id);
+			const globalFigure = window.location.href.split("/").pop()
+			if (globalFigure == figure) {
+				setIter(iter => {
+					if (iter === lessonFig.times.length) {
 
-					if (figure !== "gamegoal") {
-						handleStep(iter);
+						clearTimeout(intervalId)
+						setIntervalId(null)
+						return iter;
+					} else {
+						setIntervalId(id);
+
+						if (figure !== "locationfigure") {
+							handleStep(iter);
+						}
+						if (figure === "locationfigure") stepGameGoal(iter);
+						return iter + 1;
 					}
-					if (figure === "gamegoal") stepGameGoal(iter);
-					return iter + 1;
-				}
 
-			})
+				})
+			}
+
 		}, lessonFig.times[iter])
 	}
 
